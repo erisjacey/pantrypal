@@ -67,11 +67,11 @@ public class GroceryItemController {
         return existingItem.map(item -> {
             groceryItemService.deleteGroceryItem(id);
             return ResponseEntity.noContent().<Void>build(); // Explicitly specify the generic type
-        }).orElse(ResponseEntity.notFound().<Void>build());
+        }).orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/alive")
+    @GetMapping(Constants.ALIVE_ENDPOINT_PATH)
     public String alive() {
-        return "PantryPalBackend (GroceryItem) is alive!";
+        return Constants.ALIVE_MESSAGE;
     }
 }

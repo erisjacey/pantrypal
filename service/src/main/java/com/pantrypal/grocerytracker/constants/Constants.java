@@ -6,6 +6,9 @@ public class Constants {
     // Base path for the grocery item API
     public static final String GROCERY_ITEM_API_BASE_PATH = "/api/grocery-items";
 
+    // Alive endpoint path
+    public static final String ALIVE_ENDPOINT_PATH = "/alive";
+
     // Subpaths for CRUD operations
     public static final String GROCERY_ITEM_API_GET_ALL = "";
     public static final String GROCERY_ITEM_API_GET_BY_ID = "/{id}";
@@ -32,8 +35,7 @@ public class Constants {
     public static final String IO_EXCEPTION_UNKNOWN_UNIT_TYPE = "Unknown unit type: ";
     public static final String IO_EXCEPTION_DESERIALIZING_UNIT = "Error deserializing Unit";
 
-    // Constants for IllegalArgumentException messages
-    public static final String ILLEGAL_ARGUMENT_EXCEPTION_NULL_UNIT_STRING = "Unknown unit string: ";
-    public static final String ILLEGAL_ARGUMENT_EXCEPTION_UNKNOWN_UNIT_STRING = "Unit string cannot be null";
+    // Alive message
+    public static final String ALIVE_MESSAGE = "PantryPalBackend (GroceryItem) is alive!";
 
 }
