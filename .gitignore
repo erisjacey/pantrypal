@@ -1,0 +1,39 @@
+# IntelliJ IDEA files
+.idea/
+
+# Compiled class files
+*.class
+
+# Maven build directory
+/target/
+
+# Gradle build directory
+/build/
+
+# Eclipse files
+.classpath
+.project
+.settings/
+
+# Spring Boot logs
+/logs/
+
+# IDE-specific files
+*.iml
+*.ipr
+*.iws
+*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Maven Wrapper
+service/mvnw
+service/mvnw.cmd
+service/.mvn/wrapper/maven-wrapper.jar
+service/.mvn/wrapper/maven-wrapper.properties
+
+# Service
+service/HELP.md
+service/.gitignore
