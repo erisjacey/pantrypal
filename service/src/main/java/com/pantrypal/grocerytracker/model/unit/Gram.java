@@ -13,5 +13,8 @@ public class Gram extends Unit {
         return amount; // Gram is already the base unit
     }
 
-    // Other methods specific to Gram unit
+    @Override
+    public double convertFromBaseUnit(double amount) {
+        return amount; // No conversion needed for gram
+    }
 }

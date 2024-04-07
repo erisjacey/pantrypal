@@ -14,5 +14,9 @@ public class Liter extends Unit {
         return amount * 1000; // Convert liter to grams (base unit)
     }
 
-    // Add other methods specific to the Liter unit if needed
+    @Override
+    public double convertFromBaseUnit(double amount) {
+        // Convert grams to liters
+        return amount / 1000; // Convert grams back to liters
+    }
 }

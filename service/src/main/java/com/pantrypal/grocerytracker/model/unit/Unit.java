@@ -19,4 +19,7 @@ public abstract class Unit {
 
     // Abstract method to convert amount to base unit
     public abstract double convertToBaseUnit(double amount);
+
+    // Abstract method to convert amount from base unit to specific unit
+    public abstract double convertFromBaseUnit(double amount);
 }

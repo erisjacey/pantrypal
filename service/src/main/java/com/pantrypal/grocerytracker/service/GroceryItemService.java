@@ -1,39 +1,21 @@
 package com.pantrypal.grocerytracker.service;
 
+import com.pantrypal.grocerytracker.dto.ModifyAmountRequest;
 import com.pantrypal.grocerytracker.model.GroceryItem;
-import com.pantrypal.grocerytracker.repository.GroceryItemRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
-public class GroceryItemService {
-    private final GroceryItemRepository groceryItemRepository;
+public interface GroceryItemService {
+    List<GroceryItem> getAllGroceryItems();
 
-    @Autowired
-    public GroceryItemService(GroceryItemRepository groceryItemRepository) {
-        this.groceryItemRepository = groceryItemRepository;
-    }
+    Optional<GroceryItem> getGroceryItemById(Long id);
 
-    public List<GroceryItem> getAllGroceryItems() {
-        return groceryItemRepository.findAll();
-    }
+    GroceryItem createGroceryItem(GroceryItem groceryItem);
 
-    public Optional<GroceryItem> getGroceryItemById(Long id) {
-        return groceryItemRepository.findById(id);
-    }
+    GroceryItem updateGroceryItem(GroceryItem updatedItem);
 
-    public GroceryItem createGroceryItem(GroceryItem groceryItem) {
-        return groceryItemRepository.save(groceryItem);
-    }
+    GroceryItem modifyGroceryItemQuantity(Long id, ModifyAmountRequest request);
 
-    public GroceryItem updateGroceryItem(GroceryItem updatedItem) {
-        return groceryItemRepository.save(updatedItem);
-    }
-
-    public void deleteGroceryItem(Long id) {
-        groceryItemRepository.deleteById(id);
-    }
+    void deleteGroceryItem(Long id);
 }

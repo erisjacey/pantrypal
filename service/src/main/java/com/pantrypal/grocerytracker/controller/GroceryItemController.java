@@ -1,6 +1,7 @@
 package com.pantrypal.grocerytracker.controller;
 
 import com.pantrypal.grocerytracker.constants.Constants;
+import com.pantrypal.grocerytracker.dto.ModifyAmountRequest;
 import com.pantrypal.grocerytracker.model.GroceryItem;
 import com.pantrypal.grocerytracker.service.GroceryItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -58,6 +60,12 @@ public class GroceryItemController {
             GroceryItem updated = groceryItemService.updateGroceryItem(updatedItem);
             return ResponseEntity.ok(updated);
         }).orElse(ResponseEntity.notFound().build());
+    }
+
+    @PatchMapping(Constants.GROCERY_ITEM_API_MODIFY)
+    public ResponseEntity<GroceryItem> modifyGroceryItem(@PathVariable Long id, @RequestBody ModifyAmountRequest request) {
+        GroceryItem modifiedItem = groceryItemService.modifyGroceryItemQuantity(id, request);
+        return ResponseEntity.ok(modifiedItem);
     }
 
     // Endpoint to delete a grocery item

@@ -1,11 +1,11 @@
 -- V1__set_up_grocery_items.sql
 
--- Create GroceryItems table
+-- Create grocery_items table
 CREATE TABLE IF NOT EXISTS grocery_items (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     amount DOUBLE PRECISION NOT NULL,
-    unit VARCHAR(255)
+    unit TEXT
 );
 
 -- Delete all records from grocery_items table

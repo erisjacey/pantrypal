@@ -14,5 +14,9 @@ public class Milliliter extends Unit {
         return amount; // Milliliter converted to gram (base unit)
     }
 
-    // Other methods specific to Milliliter unit
+    @Override
+    public double convertFromBaseUnit(double amount) {
+        // No conversion needed for milliliter
+        return amount; // Milliliter is already the base unit
+    }
 }
