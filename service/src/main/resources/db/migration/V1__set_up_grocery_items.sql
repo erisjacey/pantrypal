@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS grocery_items (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     amount DOUBLE PRECISION NOT NULL,
-    unit VARCHAR(255)
+    unit TEXT
 );
 
 -- Delete all records from grocery_items table

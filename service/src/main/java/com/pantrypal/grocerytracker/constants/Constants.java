@@ -6,6 +6,9 @@ public class Constants {
     // Base path for the grocery item API
     public static final String GROCERY_ITEM_API_BASE_PATH = "/api/grocery-items";
 
+    // Table names
+    public static final String GROCERY_ITEM_TABLE_NAME = "grocery_items";
+
     // Alive endpoint path
     public static final String ALIVE_ENDPOINT_PATH = "/alive";
 
@@ -26,14 +29,22 @@ public class Constants {
     public static final String SUCCESS_MESSAGE_GROCERY_ITEM_UPDATED = "Grocery item updated successfully";
     public static final String SUCCESS_MESSAGE_GROCERY_ITEM_DELETED = "Grocery item deleted successfully";
 
-    // Constants for UnitSerializer and UnitDeserializer
+    // JSON properties
+    public static final String PROPERTY_ID = "id";
+
+    // Constants for Unit
     public static final String UNIT_GRAM = "gram";
     public static final String UNIT_MILLILITER = "milliliter";
     public static final String UNIT_LITER = "liter";
 
-    // Constants for IOException messages
-    public static final String IO_EXCEPTION_UNKNOWN_UNIT_TYPE = "Unknown unit type: ";
-    public static final String IO_EXCEPTION_DESERIALIZING_UNIT = "Error deserializing Unit";
+    // Error messages
+    public static final String ERROR_MESSAGE_GROCERY_ITEM_NOT_FOUND = "Grocery item not found";
+    public static final String ERROR_MESSAGE_GROCERY_ITEM_NOT_FOUND_WITH_ID =
+            ERROR_MESSAGE_GROCERY_ITEM_NOT_FOUND + " with ID: ";
+    public static final String ERROR_MESSAGE_INVALID_GROCERY_ITEM_REQUEST = "Invalid grocery item request";
+    public static final String ERROR_MESSAGE_INSUFFICIENT_QUANTITY = "Insufficient quantity to modify";
+
+    public static final String ILLEGAL_ARGUMENT_EXCEPTION_UNKNOWN_UNIT_STRING = "Unknown unit string: ";
 
     // Alive message
     public static final String ALIVE_MESSAGE = "PantryPalBackend (GroceryItem) is alive!";

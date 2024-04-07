@@ -37,3 +37,4 @@ service/.mvn/wrapper/maven-wrapper.properties
 # Service
 service/HELP.md
 service/.gitignore
+service/target/*
