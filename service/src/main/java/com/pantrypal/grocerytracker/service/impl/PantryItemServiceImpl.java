@@ -46,8 +46,7 @@ public class PantryItemServiceImpl implements PantryItemService {
     public PantryItem modifyPantryItemQuantity(Long id, ModifyAmountRequest request) {
         Optional<PantryItem> existingItemOptional = pantryItemRepository.findById(id);
         if (existingItemOptional.isEmpty()) {
-            // TODO: Change constant name from "...GROCERY_ITEM..." to "...PANTRY_ITEM..."
-            throw new EntityNotFoundException(Constants.ERROR_MESSAGE_GROCERY_ITEM_NOT_FOUND_WITH_ID + id);
+            throw new EntityNotFoundException(Constants.ERROR_MESSAGE_PANTRY_ITEM_NOT_FOUND_WITH_ID + id);
         }
 
         PantryItem existingItem = existingItemOptional.get();

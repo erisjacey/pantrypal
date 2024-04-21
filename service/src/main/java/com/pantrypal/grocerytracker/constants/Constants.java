@@ -47,9 +47,9 @@ public class Constants {
     public static final String UNIT_LITER = "liter";
 
     // Error messages
-    public static final String ERROR_MESSAGE_GROCERY_ITEM_NOT_FOUND = "Grocery item not found";
-    public static final String ERROR_MESSAGE_GROCERY_ITEM_NOT_FOUND_WITH_ID =
-            ERROR_MESSAGE_GROCERY_ITEM_NOT_FOUND + " with ID: ";
+    public static final String ERROR_MESSAGE_PANTRY_ITEM_NOT_FOUND = "Pantry item not found";
+    public static final String ERROR_MESSAGE_PANTRY_ITEM_NOT_FOUND_WITH_ID =
+            ERROR_MESSAGE_PANTRY_ITEM_NOT_FOUND + " with ID: ";
     public static final String ERROR_MESSAGE_INVALID_GROCERY_ITEM_REQUEST = "Invalid grocery item request";
     public static final String ERROR_MESSAGE_INSUFFICIENT_QUANTITY = "Insufficient quantity to modify";
 
