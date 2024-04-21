@@ -80,6 +80,6 @@ public class GroceryItemController {
 
     @GetMapping(Constants.ALIVE_ENDPOINT_PATH)
     public String alive() {
-        return Constants.ALIVE_MESSAGE;
+        return Constants.GROCERY_ITEM_ALIVE_MESSAGE;
     }
 }
