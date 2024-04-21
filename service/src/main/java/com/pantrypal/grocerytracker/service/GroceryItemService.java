@@ -15,7 +15,5 @@ public interface GroceryItemService {
 
     GroceryItem updateGroceryItem(GroceryItem updatedItem);
 
-    GroceryItem modifyGroceryItemQuantity(Long id, ModifyAmountRequest request);
-
     void deleteGroceryItem(Long id);
 }

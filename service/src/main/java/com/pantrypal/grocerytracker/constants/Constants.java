@@ -22,8 +22,6 @@ public class Constants {
     public static final String GROCERY_ITEM_API_GET_BY_ID = "/{id}";
     public static final String GROCERY_ITEM_API_CREATE = "";
     public static final String GROCERY_ITEM_API_UPDATE = "/{id}";
-    public static final String GROCERY_ITEM_API_MODIFY = "/{id}";
-    public static final String GROCERY_ITEM_API_DELETE_ALL = "";
     public static final String GROCERY_ITEM_API_DELETE = "/{id}";
 
     // Sub-paths for CRUD operations - pantry item API

@@ -42,32 +42,6 @@ public class GroceryItemServiceImpl implements GroceryItemService {
     }
 
     @Override
-    public GroceryItem modifyGroceryItemQuantity(Long id, ModifyAmountRequest request) {
-        Optional<GroceryItem> existingItemOptional = groceryItemRepository.findById(id);
-        if (existingItemOptional.isEmpty()) {
-            throw new EntityNotFoundException(Constants.ERROR_MESSAGE_GROCERY_ITEM_NOT_FOUND_WITH_ID + id);
-        }
-
-        GroceryItem existingItem = existingItemOptional.get();
-        double currentAmount = existingItem.getAmount();
-        double modifiedAmountInBaseUnit = request.getUnit().convertToBaseUnit(request.getAmount());
-
-        if (!existingItem.getUnit().getClass().equals(request.getUnit().getClass())) {
-            // If the existing item's unit is not the same type as the request unit,
-            // convert the existing item's amount to the base unit first
-            currentAmount = existingItem.getUnit().convertToBaseUnit(currentAmount);
-        }
-
-        if (currentAmount < modifiedAmountInBaseUnit) {
-            throw new IllegalArgumentException(Constants.ERROR_MESSAGE_INSUFFICIENT_QUANTITY);
-        }
-
-        double updatedAmountInBaseUnit = currentAmount - modifiedAmountInBaseUnit;
-        existingItem.setAmount(existingItem.getUnit().convertFromBaseUnit(updatedAmountInBaseUnit));
-        return groceryItemRepository.save(existingItem);
-    }
-
-    @Override
     public void deleteGroceryItem(Long id) {
         groceryItemRepository.deleteById(id);
     }

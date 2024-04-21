@@ -62,12 +62,6 @@ public class GroceryItemController {
         }).orElse(ResponseEntity.notFound().build());
     }
 
-    @PatchMapping(Constants.GROCERY_ITEM_API_MODIFY)
-    public ResponseEntity<GroceryItem> modifyGroceryItem(@PathVariable Long id, @RequestBody ModifyAmountRequest request) {
-        GroceryItem modifiedItem = groceryItemService.modifyGroceryItemQuantity(id, request);
-        return ResponseEntity.ok(modifiedItem);
-    }
-
     // Endpoint to delete a grocery item
     @DeleteMapping(Constants.GROCERY_ITEM_API_DELETE)
     public ResponseEntity<Void> deleteGroceryItem(@PathVariable Long id) {
