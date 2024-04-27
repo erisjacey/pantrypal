@@ -2,6 +2,8 @@ package com.pantrypal.grocerytracker.service.impl;
 
 import com.pantrypal.grocerytracker.constants.Constants;
 import com.pantrypal.grocerytracker.dto.ModifyAmountRequest;
+import com.pantrypal.grocerytracker.mapper.PantryItemMapper;
+import com.pantrypal.grocerytracker.model.GroceryItem;
 import com.pantrypal.grocerytracker.model.PantryItem;
 import com.pantrypal.grocerytracker.model.unit.Unit;
 import com.pantrypal.grocerytracker.repository.PantryItemRepository;
@@ -16,10 +18,15 @@ import java.util.Optional;
 @Service
 public class PantryItemServiceImpl implements PantryItemService {
     private final PantryItemRepository pantryItemRepository;
+    private final PantryItemMapper pantryItemMapper;
 
     @Autowired
-    public PantryItemServiceImpl(PantryItemRepository pantryItemRepository) {
+    public PantryItemServiceImpl(
+            PantryItemRepository pantryItemRepository,
+            PantryItemMapper pantryItemMapper
+    ) {
         this.pantryItemRepository = pantryItemRepository;
+        this.pantryItemMapper = pantryItemMapper;
     }
 
     @Override
@@ -34,6 +41,15 @@ public class PantryItemServiceImpl implements PantryItemService {
 
     @Override
     public PantryItem createPantryItem(PantryItem pantryItem) {
+        return pantryItemRepository.save(pantryItem);
+    }
+
+    @Override
+    public PantryItem addGroceryItemToPantry(GroceryItem groceryItem) {
+        // Map grocery item to entity
+        PantryItem pantryItem = pantryItemMapper.mapToEntity(groceryItem);
+
+        // Save and return pantry item
         return pantryItemRepository.save(pantryItem);
     }
 

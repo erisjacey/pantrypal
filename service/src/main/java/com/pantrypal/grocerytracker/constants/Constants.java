@@ -8,10 +8,12 @@ public class Constants {
     public static final String PANTRY_ITEM_API_BASE_PATH = "/api/pantry-items";
 
     // Table names
+    public static final String PRODUCT_TABLE_NAME = "products";
     public static final String GROCERY_ITEM_TABLE_NAME = "grocery_items";
     public static final String PANTRY_ITEM_TABLE_NAME = "pantry_items";
 
     // Table column names
+    public static final String PRODUCT_TABLE_ID_NAME = "product_id";
     public static final String GROCERY_ITEM_TABLE_ID_NAME = "grocery_item_id";
 
     // Alive endpoint path

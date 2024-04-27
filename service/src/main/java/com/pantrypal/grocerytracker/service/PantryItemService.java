@@ -1,6 +1,7 @@
 package com.pantrypal.grocerytracker.service;
 
 import com.pantrypal.grocerytracker.dto.ModifyAmountRequest;
+import com.pantrypal.grocerytracker.model.GroceryItem;
 import com.pantrypal.grocerytracker.model.PantryItem;
 
 import java.util.List;
@@ -12,6 +13,8 @@ public interface PantryItemService {
     Optional<PantryItem> getPantryItemById(Long id);
 
     PantryItem createPantryItem(PantryItem pantryItem);
+
+    PantryItem addGroceryItemToPantry(GroceryItem groceryItem);
 
     PantryItem updatePantryItem(PantryItem updatedItem);
 
