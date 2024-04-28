@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class PantryItemDtoTest {
     @Test
     @DisplayName("Test getters and setters")
-    public void gettersAndSetters() {
+    void gettersAndSetters() {
         // Arrange
         PantryItemDto pantryItemDto = new PantryItemDto();
         Long id = 1L;

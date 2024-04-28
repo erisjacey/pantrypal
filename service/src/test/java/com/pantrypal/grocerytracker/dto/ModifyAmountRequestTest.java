@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class ModifyAmountRequestTest {
     @Test
     @DisplayName("Test getters and setters")
-    public void gettersAndSetters() {
+    void gettersAndSetters() {
         // Arrange
         double amount = 2.5;
         Unit unit = new Liter();

@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class UnitTest {
     @Test
     @DisplayName("Test get unit string with valid unit")
-    public void fromStringWithValidUnit() {
+    void fromStringWithValidUnit() {
         assertEquals(Gram.class, Unit.fromString(Constants.UNIT_GRAM).getClass());
         assertEquals(Milliliter.class, Unit.fromString(Constants.UNIT_MILLILITER).getClass());
         assertEquals(Liter.class, Unit.fromString(Constants.UNIT_LITER).getClass());
@@ -18,7 +18,7 @@ class UnitTest {
 
     @Test
     @DisplayName("Test get unit string with invalid unit")
-    public void fromStringWithInvalidUnit() {
+    void fromStringWithInvalidUnit() {
         String invalidUnit = "invalid_unit";
         Throwable exception = assertThrows(
                 IllegalArgumentException.class, () -> Unit.fromString("invalid_unit")
