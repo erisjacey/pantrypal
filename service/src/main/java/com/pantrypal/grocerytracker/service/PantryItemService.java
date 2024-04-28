@@ -14,5 +14,9 @@ public interface PantryItemService {
 
     PantryItemDto addGroceryItemToPantry(GroceryItem groceryItem);
 
+    PantryItemDto updateGroceryItemInPantry(GroceryItem updatedItem);
+
+    void deleteGroceryItemInPantry(Long groceryItemId);
+
     PantryItemDto modifyPantryItemQuantity(Long id, ModifyAmountRequest request);
 }

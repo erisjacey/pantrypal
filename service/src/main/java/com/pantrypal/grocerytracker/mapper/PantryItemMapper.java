@@ -14,6 +14,14 @@ public class PantryItemMapper {
         return pantryItem;
     }
 
+    public PantryItem mapToEntityWithId(GroceryItem groceryItem, Long pantryItemId) {
+        PantryItem pantryItem = new PantryItem();
+        pantryItem.setId(pantryItemId);
+        pantryItem.setGroceryItem(groceryItem);
+        pantryItem.setQuantityInStock(groceryItem.getAmount()); // The initial quantity is the same as the amount bought
+        return pantryItem;
+    }
+
     public PantryItemDto mapToDto(PantryItem pantryItem) {
         PantryItemDto dto = new PantryItemDto();
         dto.setId(pantryItem.getId());

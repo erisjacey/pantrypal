@@ -57,13 +57,28 @@ public class PantryItemServiceImpl implements PantryItemService {
     }
 
     @Override
-    public PantryItemDto modifyPantryItemQuantity(Long id, ModifyAmountRequest request) {
-        Optional<PantryItem> existingItemOptional = pantryItemRepository.findById(id);
-        if (existingItemOptional.isEmpty()) {
-            throw new EntityNotFoundException(Constants.ERROR_MESSAGE_PANTRY_ITEM_NOT_FOUND_WITH_ID + id);
-        }
+    public PantryItemDto updateGroceryItemInPantry(GroceryItem updatedItem) {
+        // Find existing pantry item
+        PantryItem existingPantryItem = findPantryItemByGroceryItemId(updatedItem.getId());
 
-        PantryItem existingItem = existingItemOptional.get();
+        // Map grocery item to entity (including pantry item ID)
+        PantryItem updatedPantryItem = pantryItemMapper.mapToEntityWithId(updatedItem, existingPantryItem.getId());
+
+        // Save and return pantry item
+        PantryItem savedUpdatedPantryItem = pantryItemRepository.save(updatedPantryItem);
+        return pantryItemMapper.mapToDto(savedUpdatedPantryItem);
+    }
+
+    @Override
+    public void deleteGroceryItemInPantry(Long groceryItemId) {
+        pantryItemRepository.deleteByGroceryItem_Id(groceryItemId);
+    }
+
+    @Override
+    public PantryItemDto modifyPantryItemQuantity(Long id, ModifyAmountRequest request) {
+        // Find existing pantry item
+        PantryItem existingItem = findPantryItemById(id);
+
         double currentAmount = existingItem.getQuantityInStock();
         double modifiedAmountInBaseUnit = request.getUnit().convertToBaseUnit(request.getAmount());
         Unit existingItemUnit = existingItem.getGroceryItem().getUnit();
@@ -82,5 +97,23 @@ public class PantryItemServiceImpl implements PantryItemService {
         existingItem.setQuantityInStock(existingItemUnit.convertFromBaseUnit(updatedAmountInBaseUnit));
         PantryItem savedExistingItem = pantryItemRepository.save(existingItem);
         return pantryItemMapper.mapToDto(savedExistingItem);
+    }
+
+    private PantryItem findPantryItemByGroceryItemId(Long groceryItemId) {
+        Optional<PantryItem> existingPantryItemOptional = pantryItemRepository.findByGroceryItem_Id(groceryItemId);
+        return existingPantryItemOptional.orElseThrow(
+                () -> new EntityNotFoundException(
+                        Constants.ERROR_MESSAGE_PANTRY_ITEM_NOT_FOUND_WITH_GROCERY_ITEM_ID + groceryItemId
+                )
+        );
+    }
+
+    private PantryItem findPantryItemById(Long pantryItemId) {
+        Optional<PantryItem> existingItemOptional = pantryItemRepository.findById(pantryItemId);
+        return existingItemOptional.orElseThrow(
+                () -> new EntityNotFoundException(
+                        Constants.ERROR_MESSAGE_PANTRY_ITEM_NOT_FOUND_WITH_ID + pantryItemId
+                )
+        );
     }
 }

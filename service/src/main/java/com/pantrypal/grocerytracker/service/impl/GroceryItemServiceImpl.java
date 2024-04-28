@@ -82,12 +82,20 @@ public class GroceryItemServiceImpl implements GroceryItemService {
         // Save grocery item
         GroceryItem savedUpdatedItem = groceryItemRepository.save(updatedItemToSave);
 
+        // Propagate update to pantry item
+        pantryItemService.updateGroceryItemInPantry(savedUpdatedItem);
+
         // Map saved entity to DTO and return
         return groceryItemMapper.mapToDto(savedUpdatedItem);
     }
 
     @Override
+    @Transactional
     public void deleteGroceryItem(Long id) {
+        // Propagate delete of pantry item first
+        pantryItemService.deleteGroceryItemInPantry(id);
+
+        // Then delete grocery item
         groceryItemRepository.deleteById(id);
     }
 }
