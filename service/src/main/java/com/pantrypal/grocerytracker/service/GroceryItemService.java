@@ -1,19 +1,18 @@
 package com.pantrypal.grocerytracker.service;
 
-import com.pantrypal.grocerytracker.dto.BuyGroceryItemRequest;
-import com.pantrypal.grocerytracker.model.GroceryItem;
+import com.pantrypal.grocerytracker.dto.GroceryItemDto;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface GroceryItemService {
-    List<GroceryItem> getAllGroceryItems();
+    List<GroceryItemDto> getAllGroceryItems();
 
-    Optional<GroceryItem> getGroceryItemById(Long id);
+    Optional<GroceryItemDto> getGroceryItemById(Long id);
 
-    GroceryItem createGroceryItem(BuyGroceryItemRequest groceryItem);
+    GroceryItemDto createGroceryItem(GroceryItemDto groceryItem);
 
-    GroceryItem updateGroceryItem(GroceryItem updatedItem);
+    GroceryItemDto updateGroceryItem(GroceryItemDto updatedItem);
 
     void deleteGroceryItem(Long id);
 }

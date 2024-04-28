@@ -1,22 +1,18 @@
 package com.pantrypal.grocerytracker.service;
 
 import com.pantrypal.grocerytracker.dto.ModifyAmountRequest;
+import com.pantrypal.grocerytracker.dto.PantryItemDto;
 import com.pantrypal.grocerytracker.model.GroceryItem;
-import com.pantrypal.grocerytracker.model.PantryItem;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface PantryItemService {
-    List<PantryItem> getAllPantryItems();
+    List<PantryItemDto> getAllPantryItems();
 
-    Optional<PantryItem> getPantryItemById(Long id);
+    Optional<PantryItemDto> getPantryItemById(Long id);
 
-    PantryItem createPantryItem(PantryItem pantryItem);
+    PantryItemDto addGroceryItemToPantry(GroceryItem groceryItem);
 
-    PantryItem addGroceryItemToPantry(GroceryItem groceryItem);
-
-    PantryItem updatePantryItem(PantryItem updatedItem);
-
-    PantryItem modifyPantryItemQuantity(Long id, ModifyAmountRequest request);
+    PantryItemDto modifyPantryItemQuantity(Long id, ModifyAmountRequest request);
 }

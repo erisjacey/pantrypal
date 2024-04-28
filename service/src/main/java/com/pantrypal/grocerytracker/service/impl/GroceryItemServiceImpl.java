@@ -1,6 +1,6 @@
 package com.pantrypal.grocerytracker.service.impl;
 
-import com.pantrypal.grocerytracker.dto.BuyGroceryItemRequest;
+import com.pantrypal.grocerytracker.dto.GroceryItemDto;
 import com.pantrypal.grocerytracker.mapper.GroceryItemMapper;
 import com.pantrypal.grocerytracker.model.GroceryItem;
 import com.pantrypal.grocerytracker.model.Product;
@@ -36,37 +36,54 @@ public class GroceryItemServiceImpl implements GroceryItemService {
     }
 
     @Override
-    public List<GroceryItem> getAllGroceryItems() {
-        return groceryItemRepository.findAll();
+    public List<GroceryItemDto> getAllGroceryItems() {
+        List<GroceryItem> groceryItems = groceryItemRepository.findAll();
+
+        // Map each grocery item to DTO and return
+        return groceryItems.stream()
+                .map(groceryItemMapper::mapToDto)
+                .toList();
     }
 
     @Override
-    public Optional<GroceryItem> getGroceryItemById(Long id) {
-        return groceryItemRepository.findById(id);
+    public Optional<GroceryItemDto> getGroceryItemById(Long id) {
+        Optional<GroceryItem> optionalGroceryItem = groceryItemRepository.findById(id);
+        return optionalGroceryItem.map(groceryItemMapper::mapToDto);
     }
 
     @Override
     @Transactional
-    public GroceryItem createGroceryItem(BuyGroceryItemRequest request) {
+    public GroceryItemDto createGroceryItem(GroceryItemDto groceryItem) {
         // Check if product exists, create if not found
-        Product product = productService.findOrCreateProduct(request.getName());
+        Product product = productService.findOrCreateProduct(groceryItem.getName());
 
-        // Map DTO to grocery item entity
-        GroceryItem groceryItem = groceryItemMapper.mapToEntity(request, product);
+        // Map DTO to entity to save
+        GroceryItem groceryItemToSave = groceryItemMapper.mapToEntity(groceryItem, product);
 
         // Save grocery item
-        groceryItemRepository.save(groceryItem);
+        GroceryItem savedGroceryItem = groceryItemRepository.save(groceryItemToSave);
 
         // Save pantry item
-        pantryItemService.addGroceryItemToPantry(groceryItem);
+        pantryItemService.addGroceryItemToPantry(savedGroceryItem);
 
-        // Return grocery item
-        return groceryItem;
+        // Map saved entity to DTO and return
+        return groceryItemMapper.mapToDto(savedGroceryItem);
     }
 
     @Override
-    public GroceryItem updateGroceryItem(GroceryItem updatedItem) {
-        return groceryItemRepository.save(updatedItem);
+    @Transactional
+    public GroceryItemDto updateGroceryItem(GroceryItemDto updatedItem) {
+        // Check if product exists, create if not found
+        Product product = productService.findOrCreateProduct(updatedItem.getName());
+
+        // Map DTO to entity (including ID) to save
+        GroceryItem updatedItemToSave = groceryItemMapper.mapToEntityWithId(updatedItem, product);
+
+        // Save grocery item
+        GroceryItem savedUpdatedItem = groceryItemRepository.save(updatedItemToSave);
+
+        // Map saved entity to DTO and return
+        return groceryItemMapper.mapToDto(savedUpdatedItem);
     }
 
     @Override

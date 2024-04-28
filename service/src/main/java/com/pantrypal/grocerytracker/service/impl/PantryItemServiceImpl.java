@@ -2,6 +2,7 @@ package com.pantrypal.grocerytracker.service.impl;
 
 import com.pantrypal.grocerytracker.constants.Constants;
 import com.pantrypal.grocerytracker.dto.ModifyAmountRequest;
+import com.pantrypal.grocerytracker.dto.PantryItemDto;
 import com.pantrypal.grocerytracker.mapper.PantryItemMapper;
 import com.pantrypal.grocerytracker.model.GroceryItem;
 import com.pantrypal.grocerytracker.model.PantryItem;
@@ -30,36 +31,33 @@ public class PantryItemServiceImpl implements PantryItemService {
     }
 
     @Override
-    public List<PantryItem> getAllPantryItems() {
-        return pantryItemRepository.findAll();
+    public List<PantryItemDto> getAllPantryItems() {
+        List<PantryItem> pantryItems = pantryItemRepository.findAll();
+
+        // Map each pantry item to DTO and return
+        return pantryItems.stream()
+                .map(pantryItemMapper::mapToDto)
+                .toList();
     }
 
     @Override
-    public Optional<PantryItem> getPantryItemById(Long id) {
-        return pantryItemRepository.findById(id);
+    public Optional<PantryItemDto> getPantryItemById(Long id) {
+        Optional<PantryItem> optionalPantryItem = pantryItemRepository.findById(id);
+        return optionalPantryItem.map(pantryItemMapper::mapToDto);
     }
 
     @Override
-    public PantryItem createPantryItem(PantryItem pantryItem) {
-        return pantryItemRepository.save(pantryItem);
-    }
-
-    @Override
-    public PantryItem addGroceryItemToPantry(GroceryItem groceryItem) {
+    public PantryItemDto addGroceryItemToPantry(GroceryItem groceryItem) {
         // Map grocery item to entity
         PantryItem pantryItem = pantryItemMapper.mapToEntity(groceryItem);
 
         // Save and return pantry item
-        return pantryItemRepository.save(pantryItem);
+        PantryItem savedPantryItem = pantryItemRepository.save(pantryItem);
+        return pantryItemMapper.mapToDto(savedPantryItem);
     }
 
     @Override
-    public PantryItem updatePantryItem(PantryItem updatedItem) {
-        return pantryItemRepository.save(updatedItem);
-    }
-
-    @Override
-    public PantryItem modifyPantryItemQuantity(Long id, ModifyAmountRequest request) {
+    public PantryItemDto modifyPantryItemQuantity(Long id, ModifyAmountRequest request) {
         Optional<PantryItem> existingItemOptional = pantryItemRepository.findById(id);
         if (existingItemOptional.isEmpty()) {
             throw new EntityNotFoundException(Constants.ERROR_MESSAGE_PANTRY_ITEM_NOT_FOUND_WITH_ID + id);
@@ -82,6 +80,7 @@ public class PantryItemServiceImpl implements PantryItemService {
 
         double updatedAmountInBaseUnit = currentAmount - modifiedAmountInBaseUnit;
         existingItem.setQuantityInStock(existingItemUnit.convertFromBaseUnit(updatedAmountInBaseUnit));
-        return pantryItemRepository.save(existingItem);
+        PantryItem savedExistingItem = pantryItemRepository.save(existingItem);
+        return pantryItemMapper.mapToDto(savedExistingItem);
     }
 }

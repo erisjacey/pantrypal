@@ -29,8 +29,6 @@ public class Constants {
     // Sub-paths for CRUD operations - pantry item API
     public static final String PANTRY_ITEM_API_GET_ALL = "";
     public static final String PANTRY_ITEM_API_GET_BY_ID = "/{id}";
-    public static final String PANTRY_ITEM_API_CREATE = "";
-    public static final String PANTRY_ITEM_API_UPDATE = "/{id}";
     public static final String PANTRY_ITEM_API_MODIFY = "/{id}";
 
     // Success messages
@@ -38,8 +36,8 @@ public class Constants {
     public static final String SUCCESS_MESSAGE_GROCERY_ITEM_UPDATED = "Grocery item updated successfully";
     public static final String SUCCESS_MESSAGE_GROCERY_ITEM_DELETED = "Grocery item deleted successfully";
 
-    // JSON properties
-    public static final String PROPERTY_ID = "id";
+    // JSON formats
+    public static final String DATE_FORMAT_YYYY_MM_DD = "yyyy-MM-dd";
 
     // Constants for Unit
     public static final String UNIT_GRAM = "gram";
