@@ -14,14 +14,14 @@ class LiterTest {
         this.liter = new Liter();
     }
 
-    @DisplayName("Liter conversion to base unit")
     @Test
+    @DisplayName("Test liter conversion to base unit")
     void convertToBaseUnit() {
         assertEquals(500.0, liter.convertToBaseUnit(0.5)); // 0.5 liters to grams
     }
 
-    @DisplayName("Liter conversion from base unit")
     @Test
+    @DisplayName("Test liter conversion from base unit")
     void convertFromBaseUnit() {
         assertEquals(0.5, liter.convertFromBaseUnit(500.0)); // 500 grams to liters
     }

@@ -14,14 +14,14 @@ class GramTest {
         this.gram = new Gram();
     }
 
-    @DisplayName("Gram conversion to base unit")
     @Test
+    @DisplayName("Test gram conversion to base unit")
     void convertToBaseUnit() {
         assertEquals(100.0, gram.convertToBaseUnit(100.0));
     }
 
-    @DisplayName("Gram conversion from base unit")
     @Test
+    @DisplayName("Test gram conversion from base unit")
     void convertFromBaseUnit() {
         assertEquals(100.0, gram.convertToBaseUnit(100.0));
     }

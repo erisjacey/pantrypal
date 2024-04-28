@@ -8,16 +8,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class UnitTest {
-    @DisplayName("Get unit string with valid unit")
     @Test
+    @DisplayName("Test get unit string with valid unit")
     public void fromStringWithValidUnit() {
         assertEquals(Gram.class, Unit.fromString(Constants.UNIT_GRAM).getClass());
         assertEquals(Milliliter.class, Unit.fromString(Constants.UNIT_MILLILITER).getClass());
         assertEquals(Liter.class, Unit.fromString(Constants.UNIT_LITER).getClass());
     }
 
-    @DisplayName("Get unit string with invalid unit")
     @Test
+    @DisplayName("Test get unit string with invalid unit")
     public void fromStringWithInvalidUnit() {
         String invalidUnit = "invalid_unit";
         Throwable exception = assertThrows(

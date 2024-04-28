@@ -14,14 +14,14 @@ class MilliliterTest {
         this.milliliter = new Milliliter();
     }
 
-    @DisplayName("Milliliter conversion to base unit")
     @Test
+    @DisplayName("Test milliliter conversion to base unit")
     void convertToBaseUnit() {
         assertEquals(100.0, milliliter.convertToBaseUnit(100.0)); // 100 milliliters to grams
     }
 
-    @DisplayName("Milliliter conversion from base unit")
     @Test
+    @DisplayName("Test milliliter conversion from base unit")
     void convertFromBaseUnit() {
         assertEquals(100.0, milliliter.convertToBaseUnit(100.0)); // 100 grams to milliliters
     }
