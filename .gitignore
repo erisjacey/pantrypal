@@ -35,5 +35,6 @@ service/.mvn/wrapper/maven-wrapper.jar
 service/.mvn/wrapper/maven-wrapper.properties
 
 # Service
+service/target/**
 service/HELP.md
 service/.gitignore
