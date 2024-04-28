@@ -80,20 +80,20 @@ public class PantryItemServiceImpl implements PantryItemService {
         PantryItem existingItem = findPantryItemById(id);
 
         double currentAmount = existingItem.getQuantityInStock();
-        double modifiedAmountInBaseUnit = request.getUnit().convertToBaseUnit(request.getAmount());
+        double modifyAmountInBaseUnit = request.getUnit().convertToBaseUnit(request.getAmount());
         Unit existingItemUnit = existingItem.getGroceryItem().getUnit();
 
-        if (!existingItemUnit.getClass().equals(request.getUnit().getClass())) {
+        if (!existingItemUnit.equals(request.getUnit())) {
             // If the existing item's unit is not the same type as the request unit,
             // convert the existing item's amount to the base unit first
             currentAmount = existingItemUnit.convertToBaseUnit(currentAmount);
         }
 
-        if (currentAmount < modifiedAmountInBaseUnit) {
+        if (currentAmount < modifyAmountInBaseUnit) {
             throw new IllegalArgumentException(Constants.ERROR_MESSAGE_INSUFFICIENT_QUANTITY);
         }
 
-        double updatedAmountInBaseUnit = currentAmount - modifiedAmountInBaseUnit;
+        double updatedAmountInBaseUnit = currentAmount - modifyAmountInBaseUnit;
         existingItem.setQuantityInStock(existingItemUnit.convertFromBaseUnit(updatedAmountInBaseUnit));
         PantryItem savedExistingItem = pantryItemRepository.save(existingItem);
         return pantryItemMapper.mapToDto(savedExistingItem);
@@ -108,11 +108,11 @@ public class PantryItemServiceImpl implements PantryItemService {
         );
     }
 
-    private PantryItem findPantryItemById(Long pantryItemId) {
-        Optional<PantryItem> existingItemOptional = pantryItemRepository.findById(pantryItemId);
+    private PantryItem findPantryItemById(Long id) {
+        Optional<PantryItem> existingItemOptional = pantryItemRepository.findById(id);
         return existingItemOptional.orElseThrow(
                 () -> new EntityNotFoundException(
-                        Constants.ERROR_MESSAGE_PANTRY_ITEM_NOT_FOUND_WITH_ID + pantryItemId
+                        Constants.ERROR_MESSAGE_PANTRY_ITEM_NOT_FOUND_WITH_ID + id
                 )
         );
     }

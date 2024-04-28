@@ -140,6 +140,7 @@ class GroceryItemServiceImplTest {
         assertNotNull(result);
         assertEquals(mockInputDto, result);
         verify(groceryItemRepository).save(mockUpdatedItem);
+        verify(pantryItemService).updateGroceryItemInPantry(mockUpdatedItem);
     }
 
     @Test
@@ -152,6 +153,7 @@ class GroceryItemServiceImplTest {
         groceryItemService.deleteGroceryItem(itemId);
 
         // Assert
+        verify(pantryItemService).deleteGroceryItemInPantry(itemId);
         verify(groceryItemRepository).deleteById(itemId);
     }
 }
