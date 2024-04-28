@@ -21,7 +21,7 @@ class UnitTest {
     void fromStringWithInvalidUnit() {
         String invalidUnit = "invalid_unit";
         Throwable exception = assertThrows(
-                IllegalArgumentException.class, () -> Unit.fromString("invalid_unit")
+                IllegalArgumentException.class, () -> Unit.fromString(invalidUnit)
         );
         assertEquals(
                 Constants.ILLEGAL_ARGUMENT_EXCEPTION_UNKNOWN_UNIT_STRING + invalidUnit,

@@ -2,6 +2,7 @@ package com.pantrypal.grocerytracker.dto;
 
 import com.pantrypal.grocerytracker.model.unit.Gram;
 import com.pantrypal.grocerytracker.model.unit.Unit;
+import com.pantrypal.grocerytracker.util.TestModels;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,12 +17,12 @@ class PantryItemDtoTest {
         // Arrange
         PantryItemDto pantryItemDto = new PantryItemDto();
         Long id = 1L;
-        String name = "Test pantry item";
-        double initialAmount = 500.0;
-        double currentAmount = 300.0;
+        String name = TestModels.PRODUCT_NAME_BUTTER;
+        double initialAmount = TestModels.AMOUNT_500;
+        double currentAmount = TestModels.AMOUNT_300;
         Unit unit = new Gram();
-        LocalDate purchasedDate = LocalDate.now();
-        LocalDate expirationDate = LocalDate.MAX;
+        LocalDate purchasedDate = TestModels.DATE_DAY_AFTER_NOW;
+        LocalDate expirationDate = TestModels.DATE_MONTH_AFTER_NOW;
 
         // Act
         pantryItemDto.setId(id);

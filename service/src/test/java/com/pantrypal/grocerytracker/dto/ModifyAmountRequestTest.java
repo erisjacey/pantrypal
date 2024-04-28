@@ -2,6 +2,7 @@ package com.pantrypal.grocerytracker.dto;
 
 import com.pantrypal.grocerytracker.model.unit.Liter;
 import com.pantrypal.grocerytracker.model.unit.Unit;
+import com.pantrypal.grocerytracker.util.TestModels;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +13,7 @@ class ModifyAmountRequestTest {
     @DisplayName("Test getters and setters")
     void gettersAndSetters() {
         // Arrange
-        double amount = 2.5;
+        double amount = TestModels.AMOUNT_2_POINT_5;
         Unit unit = new Liter();
 
         // Act

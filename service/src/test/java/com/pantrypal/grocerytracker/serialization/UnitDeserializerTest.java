@@ -23,7 +23,7 @@ class UnitDeserializerTest {
     private DeserializationContext deserializationContext;
 
     @BeforeEach
-    void setup() {
+    void setUp() {
         this.deserializer = new UnitDeserializer();
         this.jsonParser = mock(JsonParser.class);
         this.deserializationContext = mock(DeserializationContext.class);

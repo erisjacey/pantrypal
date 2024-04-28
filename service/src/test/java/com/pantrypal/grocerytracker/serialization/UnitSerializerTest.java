@@ -21,7 +21,7 @@ class UnitSerializerTest {
     private SerializerProvider serializerProvider;
 
     @BeforeEach
-    void setup() {
+    void setUp() {
         this.serializer = new UnitSerializer();
         this.jsonGenerator = mock(JsonGenerator.class);
         this.serializerProvider = mock(SerializerProvider.class);

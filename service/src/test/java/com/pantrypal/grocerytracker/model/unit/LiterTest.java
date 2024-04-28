@@ -10,7 +10,7 @@ class LiterTest {
     private Liter liter;
 
     @BeforeEach
-    void setup() {
+    void setUp() {
         this.liter = new Liter();
     }
 

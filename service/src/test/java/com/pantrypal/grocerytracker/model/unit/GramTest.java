@@ -10,7 +10,7 @@ class GramTest {
     private Gram gram;
 
     @BeforeEach
-    void setup() {
+    void setUp() {
         this.gram = new Gram();
     }
 

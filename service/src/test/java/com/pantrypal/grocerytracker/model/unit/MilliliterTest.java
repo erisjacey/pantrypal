@@ -10,7 +10,7 @@ class MilliliterTest {
     private Milliliter milliliter;
 
     @BeforeEach
-    void setup() {
+    void setUp() {
         this.milliliter = new Milliliter();
     }
 
