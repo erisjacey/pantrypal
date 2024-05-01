@@ -2,6 +2,7 @@ package com.pantrypal.grocerytracker.util;
 
 import com.pantrypal.grocerytracker.dto.GroceryItemDto;
 import com.pantrypal.grocerytracker.model.GroceryItem;
+import com.pantrypal.grocerytracker.model.PantryItem;
 import com.pantrypal.grocerytracker.model.Product;
 import com.pantrypal.grocerytracker.model.unit.Gram;
 import com.pantrypal.grocerytracker.model.unit.Liter;
@@ -10,6 +11,11 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class TestModels {
+    // IDs
+    public static final Long ID_1 = 1L;
+    public static final Long ID_2 = 2L;
+    public static final Long ID_3 = 3L;
+
     // Product names
     public static final String PRODUCT_NAME_MILK = "Milk";
     public static final String PRODUCT_NAME_BUTTER = "Butter";
@@ -27,16 +33,21 @@ public class TestModels {
     public static final LocalDate DATE_YEAR_AFTER_NOW = LocalDate.now().plusYears(1);
 
     public static Product getMilkProduct() {
-        return new Product(PRODUCT_NAME_MILK);
+        Product product = new Product(PRODUCT_NAME_MILK);
+        product.setId(ID_1);
+        return product;
     }
 
     public static Product getButterProduct() {
-        return new Product(PRODUCT_NAME_BUTTER);
+        Product product = new Product(PRODUCT_NAME_BUTTER);
+        product.setId(ID_2);
+        return product;
     }
 
     public static GroceryItem getMilkGroceryItem() {
         GroceryItem groceryItem = new GroceryItem();
         groceryItem.setProduct(getMilkProduct());
+        groceryItem.setId(ID_1);
         groceryItem.setAmount(AMOUNT_2_POINT_5);
         groceryItem.setUnit(new Liter());
         groceryItem.setPurchasedDate(DATE_NOW);
@@ -46,6 +57,7 @@ public class TestModels {
 
     public static GroceryItemDto getMilkGroceryItemDto() {
         GroceryItemDto groceryItemDto = new GroceryItemDto();
+        groceryItemDto.setId(ID_1);
         groceryItemDto.setName(PRODUCT_NAME_MILK);
         groceryItemDto.setAmount(AMOUNT_2_POINT_5);
         groceryItemDto.setUnit(new Liter());
@@ -57,6 +69,7 @@ public class TestModels {
     public static GroceryItem getButterGroceryItem() {
         GroceryItem groceryItem = new GroceryItem();
         groceryItem.setProduct(getButterProduct());
+        groceryItem.setId(ID_2);
         groceryItem.setAmount(AMOUNT_500);
         groceryItem.setUnit(new Gram());
         groceryItem.setPurchasedDate(DATE_DAY_AFTER_NOW);
@@ -66,6 +79,7 @@ public class TestModels {
 
     public static GroceryItemDto getButterGroceryItemDto() {
         GroceryItemDto groceryItemDto = new GroceryItemDto();
+        groceryItemDto.setId(ID_2);
         groceryItemDto.setName(PRODUCT_NAME_BUTTER);
         groceryItemDto.setAmount(AMOUNT_500);
         groceryItemDto.setUnit(new Gram());
@@ -80,5 +94,14 @@ public class TestModels {
 
     public static List<GroceryItemDto> getListOfTwoGroceryItemDtos() {
         return List.of(getMilkGroceryItemDto(), getButterGroceryItemDto());
+    }
+
+    public static PantryItem getMilkPantryItem() {
+        PantryItem pantryItem = new PantryItem();
+        GroceryItem groceryItem = getMilkGroceryItem();
+        pantryItem.setGroceryItem(groceryItem);
+        pantryItem.setId(ID_3);
+        pantryItem.setQuantityInStock(groceryItem.getAmount());
+        return pantryItem;
     }
 }
