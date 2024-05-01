@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -71,12 +72,13 @@ class GroceryItemServiceImplTest {
     @DisplayName("Test get grocery item by ID")
     void getGroceryItemById() {
         // Arrange
-        long itemId = 1L;
+        long itemId = TestModels.ID_1;
         GroceryItem mockGroceryItem = TestModels.getMilkGroceryItem();
         GroceryItemDto mockGroceryItemDto = TestModels.getMilkGroceryItemDto();
 
         // Mock repository behavior
         when(groceryItemRepository.findById(itemId)).thenReturn(Optional.of(mockGroceryItem));
+
         // Mock mapper behavior
         when(groceryItemMapper.mapToDto(mockGroceryItem)).thenReturn(mockGroceryItemDto);
 
@@ -93,61 +95,61 @@ class GroceryItemServiceImplTest {
     @DisplayName("Test create grocery item")
     void createGroceryItem() {
         // Arrange
-        GroceryItemDto mockInputDto = TestModels.getMilkGroceryItemDto();
-        GroceryItem mockSavedItem = TestModels.getMilkGroceryItem();
+        GroceryItem mockGroceryItem = TestModels.getMilkGroceryItem();
+        GroceryItemDto mockGroceryItemDto = TestModels.getMilkGroceryItemDto();
 
         // Mock product service behavior
         when(productService.findOrCreateProduct(anyString())).thenReturn(TestModels.getMilkProduct());
 
         // Mock repository behavior
-        when(groceryItemRepository.save(mockSavedItem)).thenReturn(mockSavedItem);
+        when(groceryItemRepository.save(mockGroceryItem)).thenReturn(mockGroceryItem);
 
         // Mock mapper behavior
-        when(groceryItemMapper.mapToEntity(any(), any())).thenReturn(mockSavedItem);
-        when(groceryItemMapper.mapToDto(mockSavedItem)).thenReturn(mockInputDto);
+        when(groceryItemMapper.mapToEntity(eq(mockGroceryItemDto), any())).thenReturn(mockGroceryItem);
+        when(groceryItemMapper.mapToDto(mockGroceryItem)).thenReturn(mockGroceryItemDto);
 
         // Act
-        GroceryItemDto result = groceryItemService.createGroceryItem(mockInputDto);
+        GroceryItemDto result = groceryItemService.createGroceryItem(mockGroceryItemDto);
 
         // Assert
         assertNotNull(result);
-        assertEquals(mockInputDto, result);
-        verify(groceryItemRepository).save(mockSavedItem);
-        verify(pantryItemService).addGroceryItemToPantry(mockSavedItem);
+        assertEquals(mockGroceryItemDto, result);
+        verify(groceryItemRepository).save(mockGroceryItem);
+        verify(pantryItemService).addGroceryItemToPantry(mockGroceryItem);
     }
 
     @Test
     @DisplayName("Test update grocery item")
     void updateGroceryItem() {
         // Arrange
-        GroceryItemDto mockInputDto = TestModels.getMilkGroceryItemDto();
-        GroceryItem mockUpdatedItem = TestModels.getMilkGroceryItem();
+        GroceryItem mockGroceryItem = TestModels.getMilkGroceryItem();
+        GroceryItemDto mockGroceryItemDto = TestModels.getMilkGroceryItemDto();
 
         // Mock product service behavior
         when(productService.findOrCreateProduct(anyString())).thenReturn(TestModels.getMilkProduct());
 
         // Mock repository behavior
-        when(groceryItemRepository.save(mockUpdatedItem)).thenReturn(mockUpdatedItem);
+        when(groceryItemRepository.save(mockGroceryItem)).thenReturn(mockGroceryItem);
 
         // Mock mapper behavior
-        when(groceryItemMapper.mapToEntityWithId(any(), any())).thenReturn(mockUpdatedItem);
-        when(groceryItemMapper.mapToDto(mockUpdatedItem)).thenReturn(mockInputDto);
+        when(groceryItemMapper.mapToEntityWithId(eq(mockGroceryItemDto), any())).thenReturn(mockGroceryItem);
+        when(groceryItemMapper.mapToDto(mockGroceryItem)).thenReturn(mockGroceryItemDto);
 
         // Act
-        GroceryItemDto result = groceryItemService.updateGroceryItem(mockInputDto);
+        GroceryItemDto result = groceryItemService.updateGroceryItem(mockGroceryItemDto);
 
         // Assert
         assertNotNull(result);
-        assertEquals(mockInputDto, result);
-        verify(groceryItemRepository).save(mockUpdatedItem);
-        verify(pantryItemService).updateGroceryItemInPantry(mockUpdatedItem);
+        assertEquals(mockGroceryItemDto, result);
+        verify(groceryItemRepository).save(mockGroceryItem);
+        verify(pantryItemService).updateGroceryItemInPantry(mockGroceryItem);
     }
 
     @Test
     @DisplayName("Test delete grocery item")
     void deleteGroceryItem() {
         // Arrange
-        long itemId = 1L;
+        long itemId = TestModels.ID_1;
 
         // Act
         groceryItemService.deleteGroceryItem(itemId);

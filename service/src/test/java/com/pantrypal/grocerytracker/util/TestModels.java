@@ -1,11 +1,14 @@
 package com.pantrypal.grocerytracker.util;
 
 import com.pantrypal.grocerytracker.dto.GroceryItemDto;
+import com.pantrypal.grocerytracker.dto.ModifyAmountRequest;
+import com.pantrypal.grocerytracker.dto.PantryItemDto;
 import com.pantrypal.grocerytracker.model.GroceryItem;
 import com.pantrypal.grocerytracker.model.PantryItem;
 import com.pantrypal.grocerytracker.model.Product;
 import com.pantrypal.grocerytracker.model.unit.Gram;
 import com.pantrypal.grocerytracker.model.unit.Liter;
+import com.pantrypal.grocerytracker.model.unit.Milliliter;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,13 +18,17 @@ public class TestModels {
     public static final Long ID_1 = 1L;
     public static final Long ID_2 = 2L;
     public static final Long ID_3 = 3L;
+    public static final Long ID_4 = 4L;
 
     // Product names
     public static final String PRODUCT_NAME_MILK = "Milk";
     public static final String PRODUCT_NAME_BUTTER = "Butter";
 
     // Amounts
+    public static final double AMOUNT_0_POINT_1 = 0.1;
+    public static final double AMOUNT_2_POINT_3 = 2.3;
     public static final double AMOUNT_2_POINT_5 = 2.5;
+    public static final double AMOUNT_200 = 200.0;
     public static final double AMOUNT_300 = 300.0;
     public static final double AMOUNT_500 = 500.0;
 
@@ -101,7 +108,55 @@ public class TestModels {
         GroceryItem groceryItem = getMilkGroceryItem();
         pantryItem.setGroceryItem(groceryItem);
         pantryItem.setId(ID_3);
-        pantryItem.setQuantityInStock(groceryItem.getAmount());
+        pantryItem.setQuantityInStock(AMOUNT_2_POINT_5);
         return pantryItem;
+    }
+
+    public static PantryItemDto getMilkPantryItemDto() {
+        PantryItemDto pantryItemDto = new PantryItemDto();
+        pantryItemDto.setId(ID_3);
+        pantryItemDto.setName(PRODUCT_NAME_MILK);
+        pantryItemDto.setInitialAmount(AMOUNT_2_POINT_5);
+        pantryItemDto.setCurrentAmount(AMOUNT_2_POINT_5);
+        pantryItemDto.setUnit(new Liter());
+        pantryItemDto.setPurchasedDate(DATE_NOW);
+        pantryItemDto.setExpirationDate(DATE_WEEK_AFTER_NOW);
+        return pantryItemDto;
+    }
+
+    public static PantryItem getButterPantryItem() {
+        PantryItem pantryItem = new PantryItem();
+        GroceryItem groceryItem = getButterGroceryItem();
+        pantryItem.setGroceryItem(groceryItem);
+        pantryItem.setId(ID_4);
+        pantryItem.setQuantityInStock(AMOUNT_500);
+        return pantryItem;
+    }
+
+    public static PantryItemDto getButterPantryItemDto() {
+        PantryItemDto pantryItemDto = new PantryItemDto();
+        pantryItemDto.setId(ID_4);
+        pantryItemDto.setName(PRODUCT_NAME_BUTTER);
+        pantryItemDto.setInitialAmount(AMOUNT_500);
+        pantryItemDto.setCurrentAmount(AMOUNT_500);
+        pantryItemDto.setUnit(new Gram());
+        pantryItemDto.setPurchasedDate(DATE_DAY_AFTER_NOW);
+        pantryItemDto.setExpirationDate(DATE_YEAR_AFTER_NOW);
+        return pantryItemDto;
+    }
+
+    public static List<PantryItem> getListOfTwoPantryItems() {
+        return List.of(getMilkPantryItem(), getButterPantryItem());
+    }
+
+    public static List<PantryItemDto> getListOfTwoPantryItemDtos() {
+        return List.of(getMilkPantryItemDto(), getButterPantryItemDto());
+    }
+
+    public static ModifyAmountRequest getModifyAmountRequest() {
+        ModifyAmountRequest request = new ModifyAmountRequest();
+        request.setAmount(AMOUNT_200);
+        request.setUnit(new Milliliter());
+        return request;
     }
 }
