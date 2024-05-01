@@ -10,17 +10,29 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
+/**
+ * Represents a pantry item entity in stock.
+ */
 @Data
 @Entity
 @Table(name = Constants.PANTRY_ITEM_TABLE_NAME)
 public class PantryItem {
+    /**
+     * The unique identifier for the pantry item.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * The grocery item associated with the pantry item.
+     */
     @OneToOne
     @JoinColumn(name = Constants.GROCERY_ITEM_TABLE_ID_NAME, nullable = false)
     private GroceryItem groceryItem;
 
+    /**
+     * The quantity of the item in stock in the pantry.
+     */
     private double quantityInStock;
 }

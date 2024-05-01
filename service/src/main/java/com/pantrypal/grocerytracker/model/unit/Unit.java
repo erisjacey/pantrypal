@@ -4,8 +4,18 @@ import com.pantrypal.grocerytracker.constants.Constants;
 
 import java.util.Objects;
 
+/**
+ * Represents a unit of measurement abstract class.
+ * Subclasses of this class define specific units, such as {@code Gram}, {@code Milliliter}, or {@code Liter}.
+ */
 public abstract class Unit {
-    // Static method to create unit instance from unit string
+    /**
+     * Creates a unit instance based on the provided unit string.
+     *
+     * @param unitString The string representation of the unit.
+     * @return An instance of the specific unit corresponding to the provided unit string.
+     * @throws IllegalArgumentException If the provided unit string is not recognized.
+     */
     public static Unit fromString(String unitString) {
         return switch (unitString) {
             case Constants.UNIT_GRAM -> new Gram();
@@ -16,13 +26,27 @@ public abstract class Unit {
         };
     }
 
-    // Method to get the string representation of the unit
+    /**
+     * Gets the string representation of the unit.
+     *
+     * @return The string representation of the unit.
+     */
     public abstract String getUnitString();
 
-    // Abstract method to convert amount to base unit
+    /**
+     * Converts the given amount to the base unit (grams) of the specific unit.
+     *
+     * @param amount The amount to convert.
+     * @return The converted amount in the base unit.
+     */
     public abstract double convertToBaseUnit(double amount);
 
-    // Abstract method to convert amount from base unit to specific unit
+    /**
+     * Converts the given amount from the base unit (grams) to the specific unit.
+     *
+     * @param amount The amount in the base unit to convert.
+     * @return The converted amount in the specific unit.
+     */
     public abstract double convertFromBaseUnit(double amount);
 
     @Override

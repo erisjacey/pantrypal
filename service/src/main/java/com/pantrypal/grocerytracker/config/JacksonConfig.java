@@ -9,9 +9,18 @@ import com.pantrypal.grocerytracker.serialization.UnitSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Configuration class for customizing Jackson ObjectMapper.
+ * Registers custom serializers and deserializers for the {@link Unit} class.
+ * Also registers the JavaTimeModule for handling Java date/time types.
+ */
 @Configuration
 public class JacksonConfig {
-
+    /**
+     * Configures and provides the customized Jackson ObjectMapper bean.
+     *
+     * @return The customized Jackson ObjectMapper.
+     */
     @Bean
     public ObjectMapper objectMapper() {
         SimpleModule module = new SimpleModule();
