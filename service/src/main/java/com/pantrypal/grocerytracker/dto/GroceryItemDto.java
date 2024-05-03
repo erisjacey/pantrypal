@@ -9,18 +9,41 @@ import lombok.Data;
 
 import java.time.LocalDate;
 
+/**
+ * Data Transfer Object (DTO) representing a grocery item.
+ */
 @Data
 public class GroceryItemDto {
+    /**
+     * The unique identifier for the grocery item.
+     */
     private Long id;
+
+    /**
+     * The name of the product associated with the grocery item.
+     */
     private String name;
+
+    /**
+     * The amount of the grocery item.
+     */
     private double amount;
 
+    /**
+     * The unit of measurement for the amount.
+     */
     @Convert(converter = UnitConverter.class)
     private Unit unit;
 
+    /**
+     * The date the grocery item was purchased.
+     */
     @JsonFormat(pattern = Constants.DATE_FORMAT_YYYY_MM_DD)
     private LocalDate purchasedDate;
 
+    /**
+     * The expiration date of the grocery item.
+     */
     @JsonFormat(pattern = Constants.DATE_FORMAT_YYYY_MM_DD)
     private LocalDate expirationDate;
 }
