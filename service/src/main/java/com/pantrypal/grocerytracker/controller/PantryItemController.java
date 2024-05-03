@@ -4,6 +4,9 @@ import com.pantrypal.grocerytracker.constants.Constants;
 import com.pantrypal.grocerytracker.dto.ModifyAmountRequest;
 import com.pantrypal.grocerytracker.dto.PantryItemDto;
 import com.pantrypal.grocerytracker.service.PantryItemService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +21,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(Constants.PANTRY_ITEM_API_BASE_PATH)
+@Tag(name = "Pantry Item Controller", description = "Endpoints for managing pantry items")
 public class PantryItemController {
     private final PantryItemService pantryItemService;
 
@@ -26,27 +30,33 @@ public class PantryItemController {
         this.pantryItemService = pantryItemService;
     }
 
-    // Endpoint to get all pantry items
+    @Operation(summary = "Get all pantry items")
     @GetMapping(Constants.PANTRY_ITEM_API_GET_ALL)
     public List<PantryItemDto> getAllPantryItems() {
         return pantryItemService.getAllPantryItems();
     }
 
-    // Endpoint to get a single pantry item by ID
+    @Operation(summary = "Get a single pantry item by ID")
     @GetMapping(Constants.PANTRY_ITEM_API_GET_BY_ID)
-    public ResponseEntity<PantryItemDto> getGroceryItemById(@PathVariable Long id) {
+    public ResponseEntity<PantryItemDto> getGroceryItemById(
+            @PathVariable @Parameter(description = "ID of the pantry item") Long id
+    ) {
         Optional<PantryItemDto> optionalPantryItem = pantryItemService.getPantryItemById(id);
         return optionalPantryItem.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // Endpoint to modify the quantity of an existing pantry item
+    @Operation(summary = "Modify the quantity of an existing pantry item")
     @PatchMapping(Constants.PANTRY_ITEM_API_MODIFY)
-    public ResponseEntity<PantryItemDto> modifyPantryItem(@PathVariable Long id, @RequestBody ModifyAmountRequest request) {
+    public ResponseEntity<PantryItemDto> modifyPantryItem(
+            @PathVariable @Parameter(description = "ID of the pantry item to be modified") Long id,
+            @RequestBody @Parameter(description = "Request body containing the new quantity") ModifyAmountRequest request
+    ) {
         PantryItemDto modifiedItem = pantryItemService.modifyPantryItemQuantity(id, request);
         return ResponseEntity.ok(modifiedItem);
     }
 
+    @Operation(summary = "Check if the Pantry Item API is alive")
     @GetMapping(Constants.ALIVE_ENDPOINT_PATH)
     public String alive() {
         return Constants.PANTRY_ITEM_ALIVE_MESSAGE;
