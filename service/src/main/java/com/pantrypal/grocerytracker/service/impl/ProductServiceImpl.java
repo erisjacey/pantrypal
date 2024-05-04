@@ -17,6 +17,7 @@ public class ProductServiceImpl implements ProductService {
         this.productRepository = productRepository;
     }
 
+    @Override
     public Product findOrCreateProduct(String name) {
         Optional<Product> existingProduct = productRepository.findByName(name);
         return existingProduct.orElseGet(() -> productRepository.save(new Product(name)));

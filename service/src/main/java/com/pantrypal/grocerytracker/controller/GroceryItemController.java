@@ -5,7 +5,6 @@ import com.pantrypal.grocerytracker.dto.GroceryItemDto;
 import com.pantrypal.grocerytracker.service.GroceryItemService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -52,7 +52,9 @@ public class GroceryItemController {
     @Operation(summary = "Create a new grocery item")
     @PostMapping(Constants.GROCERY_ITEM_API_CREATE)
     public ResponseEntity<GroceryItemDto> createGroceryItem(
-            @RequestBody(description = "Details of the grocery item to be created") GroceryItemDto groceryItem
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Details of the grocery item to be created"
+            ) @RequestBody GroceryItemDto groceryItem
     ) {
         GroceryItemDto createdItem = groceryItemService.createGroceryItem(groceryItem);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdItem);
@@ -62,7 +64,9 @@ public class GroceryItemController {
     @PutMapping(Constants.GROCERY_ITEM_API_UPDATE)
     public ResponseEntity<GroceryItemDto> updateGroceryItem(
             @PathVariable @Parameter(description = "ID of the grocery item to be updated") Long id,
-            @RequestBody(description = "Updated details of the grocery item") GroceryItemDto updatedItem
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Updated details of the grocery item"
+            ) @RequestBody GroceryItemDto updatedItem
     ) {
         Optional<GroceryItemDto> existingItem = groceryItemService.getGroceryItemById(id);
         return existingItem.map(item -> {

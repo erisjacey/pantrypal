@@ -50,7 +50,9 @@ public class PantryItemController {
     @PatchMapping(Constants.PANTRY_ITEM_API_MODIFY)
     public ResponseEntity<PantryItemDto> modifyPantryItem(
             @PathVariable @Parameter(description = "ID of the pantry item to be modified") Long id,
-            @RequestBody @Parameter(description = "Request body containing the new quantity") ModifyAmountRequest request
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Request body containing the new quantity"
+            ) @RequestBody ModifyAmountRequest request
     ) {
         PantryItemDto modifiedItem = pantryItemService.modifyPantryItemQuantity(id, request);
         return ResponseEntity.ok(modifiedItem);
