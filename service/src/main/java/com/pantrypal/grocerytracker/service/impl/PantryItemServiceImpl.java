@@ -99,6 +99,14 @@ public class PantryItemServiceImpl implements PantryItemService {
         return pantryItemMapper.mapToDto(savedExistingItem);
     }
 
+
+    /**
+     * Finds a pantry item by the ID of its associated grocery item.
+     *
+     * @param groceryItemId The ID of the grocery item associated with the pantry item to find.
+     * @return The pantry item associated with the specified grocery item ID.
+     * @throws EntityNotFoundException If no pantry item is found associated with the given grocery item ID.
+     */
     private PantryItem findPantryItemByGroceryItemId(Long groceryItemId) {
         Optional<PantryItem> existingPantryItemOptional = pantryItemRepository.findByGroceryItem_Id(groceryItemId);
         return existingPantryItemOptional.orElseThrow(
@@ -108,6 +116,13 @@ public class PantryItemServiceImpl implements PantryItemService {
         );
     }
 
+    /**
+     * Finds a pantry item by its ID.
+     *
+     * @param id The ID of the pantry item to find.
+     * @return The pantry item with the specified ID.
+     * @throws EntityNotFoundException If no pantry item is found with the given ID.
+     */
     private PantryItem findPantryItemById(Long id) {
         Optional<PantryItem> existingItemOptional = pantryItemRepository.findById(id);
         return existingItemOptional.orElseThrow(
