@@ -9,6 +9,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        // TODO: Add custom credentials
         http.authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
         return http.build();
     }
