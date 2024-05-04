@@ -6,6 +6,7 @@ public class Constants {
     // Base path for the grocery item API
     public static final String GROCERY_ITEM_API_BASE_PATH = "/api/grocery-items";
     public static final String PANTRY_ITEM_API_BASE_PATH = "/api/pantry-items";
+    public static final String AUTH_API_BASE_PATH = "/api/auth";
 
     // Table names
     public static final String PRODUCT_TABLE_NAME = "products";
