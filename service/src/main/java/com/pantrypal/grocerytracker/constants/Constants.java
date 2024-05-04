@@ -11,6 +11,7 @@ public class Constants {
     public static final String PRODUCT_TABLE_NAME = "products";
     public static final String GROCERY_ITEM_TABLE_NAME = "grocery_items";
     public static final String PANTRY_ITEM_TABLE_NAME = "pantry_items";
+    public static final String USER_TABLE_NAME = "users";
 
     // Table column names
     public static final String PRODUCT_TABLE_ID_NAME = "product_id";
@@ -30,6 +31,10 @@ public class Constants {
     public static final String PANTRY_ITEM_API_GET_ALL = "";
     public static final String PANTRY_ITEM_API_GET_BY_ID = "/{id}";
     public static final String PANTRY_ITEM_API_MODIFY = "/{id}";
+
+    // Sub-paths for auth API
+    public static final String AUTH_API_LOGIN = "/login";
+    public static final String AUTH_API_REGISTER = "/register";
 
     // Success messages
     public static final String SUCCESS_MESSAGE_GROCERY_ITEM_CREATED = "Grocery item created successfully";
