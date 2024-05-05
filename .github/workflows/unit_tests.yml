@@ -23,5 +23,8 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+      - name: Set up environment variables
+        run: echo "SPRING_PROFILES_ACTIVE=test" >> $GITHUB_ENV
+
       - name: Build with Maven
         run: mvn -f service/pom.xml clean test
