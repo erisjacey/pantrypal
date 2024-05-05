@@ -24,4 +24,4 @@ jobs:
           cache: maven
 
       - name: Build with Maven
-        run: mvn clean test
+        run: mvn -f service/pom.xml clean test
