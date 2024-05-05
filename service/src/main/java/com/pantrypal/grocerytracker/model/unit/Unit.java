@@ -22,7 +22,7 @@ public abstract class Unit {
             case Constants.UNIT_MILLILITER -> new Milliliter();
             case Constants.UNIT_LITER -> new Liter();
             default -> throw new IllegalArgumentException(
-                    Constants.ILLEGAL_ARGUMENT_EXCEPTION_UNKNOWN_UNIT_STRING + unitString);
+                    Constants.ERROR_MESSAGE_UNKNOWN_UNIT_STRING + unitString);
         };
     }
 

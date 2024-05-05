@@ -3,10 +3,15 @@ package com.pantrypal.grocerytracker.constants;
 public class Constants {
     private Constants() {}
 
-    // Base path for the grocery item API
+    // Base paths
     public static final String GROCERY_ITEM_API_BASE_PATH = "/api/grocery-items";
     public static final String PANTRY_ITEM_API_BASE_PATH = "/api/pantry-items";
     public static final String AUTH_API_BASE_PATH = "/api/auth";
+    public static final String ERROR_BASE_PATH = "/error";
+    public static final String[] SWAGGER_PATHS = {
+            "/v3/api-docs/**",
+            "swagger-ui/**"
+    };
 
     // Table names
     public static final String PRODUCT_TABLE_NAME = "products";
@@ -41,6 +46,8 @@ public class Constants {
     public static final String SUCCESS_MESSAGE_GROCERY_ITEM_CREATED = "Grocery item created successfully";
     public static final String SUCCESS_MESSAGE_GROCERY_ITEM_UPDATED = "Grocery item updated successfully";
     public static final String SUCCESS_MESSAGE_GROCERY_ITEM_DELETED = "Grocery item deleted successfully";
+    public static final String SUCCESS_MESSAGE_USER_LOGGED_IN = "User logged in successfully";
+    public static final String SUCCESS_MESSAGE_USER_REGISTERED = "User registered successfully";
 
     // JSON formats
     public static final String DATE_FORMAT_YYYY_MM_DD = "yyyy-MM-dd";
@@ -58,11 +65,19 @@ public class Constants {
             ERROR_MESSAGE_PANTRY_ITEM_NOT_FOUND + " with grocery item ID: ";
     public static final String ERROR_MESSAGE_INVALID_GROCERY_ITEM_REQUEST = "Invalid grocery item request";
     public static final String ERROR_MESSAGE_INSUFFICIENT_QUANTITY = "Insufficient quantity to modify";
+    public static final String ERROR_MESSAGE_UNKNOWN_UNIT_STRING = "Unknown unit string: ";
+    public static final String ERROR_MESSAGE_USERNAME_NOT_FOUND = "Username not found: ";
+    public static final String ERROR_MESSAGE_USERNAME_TAKEN = "Username is already taken";
+    public static final String ERROR_MESSAGE_EMAIL_REGISTERED = "Email is already registered";
 
-    public static final String ILLEGAL_ARGUMENT_EXCEPTION_UNKNOWN_UNIT_STRING = "Unknown unit string: ";
-
-    // Alive message
+    // Alive messages
     public static final String GROCERY_ITEM_ALIVE_MESSAGE = "PantryPalBackend (GroceryItem) is alive!";
     public static final String PANTRY_ITEM_ALIVE_MESSAGE = "PantryPalBackend (PantryItem) is alive!";
+
+    // Config properties
+    public static final String CONFIG_PREFIX_RSA = "rsa";
+
+    // Qualifier bean names
+    public static final String BEAN_HANDLER_EXCEPTION_RESOLVER = "handlerExceptionResolver";
 
 }
