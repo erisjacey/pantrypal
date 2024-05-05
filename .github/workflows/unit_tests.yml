@@ -20,6 +20,11 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Set up environment variables
+        run: echo "SPRING_PROFILES_ACTIVE=test" >> $GITHUB_ENV
 
       - name: Build with Maven
-        run: mvn clean test
+        run: mvn -f service/pom.xml clean test
