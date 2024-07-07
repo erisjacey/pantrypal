@@ -1,8 +1,11 @@
 package com.pantrypal.grocerytracker.model;
 
 import com.pantrypal.grocerytracker.constants.Constants;
+import com.pantrypal.grocerytracker.model.enums.GroceryType;
 import com.pantrypal.grocerytracker.model.unit.Unit;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -53,4 +56,10 @@ public class GroceryItem {
      * The expiration date of the grocery item.
      */
     private LocalDate expirationDate;
+
+    /**
+     * The type of the grocery item.
+     */
+    @Enumerated(EnumType.STRING)
+    private GroceryType groceryType;
 }

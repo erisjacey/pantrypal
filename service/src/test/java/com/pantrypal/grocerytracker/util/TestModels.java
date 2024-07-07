@@ -6,6 +6,7 @@ import com.pantrypal.grocerytracker.dto.PantryItemDto;
 import com.pantrypal.grocerytracker.model.GroceryItem;
 import com.pantrypal.grocerytracker.model.PantryItem;
 import com.pantrypal.grocerytracker.model.Product;
+import com.pantrypal.grocerytracker.model.enums.GroceryType;
 import com.pantrypal.grocerytracker.model.unit.Gram;
 import com.pantrypal.grocerytracker.model.unit.Liter;
 import com.pantrypal.grocerytracker.model.unit.Milliliter;
@@ -59,6 +60,7 @@ public class TestModels {
         groceryItem.setUnit(new Liter());
         groceryItem.setPurchasedDate(DATE_NOW);
         groceryItem.setExpirationDate(DATE_WEEK_AFTER_NOW);
+        groceryItem.setGroceryType(GroceryType.DAIRY);
         return groceryItem;
     }
 
@@ -70,6 +72,7 @@ public class TestModels {
         groceryItemDto.setUnit(new Liter());
         groceryItemDto.setPurchasedDate(DATE_NOW);
         groceryItemDto.setExpirationDate(DATE_WEEK_AFTER_NOW);
+        groceryItemDto.setGroceryType(GroceryType.DAIRY);
         return groceryItemDto;
     }
 
@@ -81,6 +84,7 @@ public class TestModels {
         groceryItem.setUnit(new Gram());
         groceryItem.setPurchasedDate(DATE_DAY_AFTER_NOW);
         groceryItem.setExpirationDate(DATE_YEAR_AFTER_NOW);
+        groceryItem.setGroceryType(GroceryType.DAIRY);
         return groceryItem;
     }
 
@@ -92,6 +96,7 @@ public class TestModels {
         groceryItemDto.setUnit(new Gram());
         groceryItemDto.setPurchasedDate(DATE_DAY_AFTER_NOW);
         groceryItemDto.setExpirationDate(DATE_YEAR_AFTER_NOW);
+        groceryItemDto.setGroceryType(GroceryType.DAIRY);
         return groceryItemDto;
     }
 
@@ -121,6 +126,7 @@ public class TestModels {
         pantryItemDto.setUnit(new Liter());
         pantryItemDto.setPurchasedDate(DATE_NOW);
         pantryItemDto.setExpirationDate(DATE_WEEK_AFTER_NOW);
+        pantryItemDto.setGroceryType(GroceryType.DAIRY);
         return pantryItemDto;
     }
 
@@ -142,6 +148,7 @@ public class TestModels {
         pantryItemDto.setUnit(new Gram());
         pantryItemDto.setPurchasedDate(DATE_DAY_AFTER_NOW);
         pantryItemDto.setExpirationDate(DATE_YEAR_AFTER_NOW);
+        pantryItemDto.setGroceryType(GroceryType.DAIRY);
         return pantryItemDto;
     }
 

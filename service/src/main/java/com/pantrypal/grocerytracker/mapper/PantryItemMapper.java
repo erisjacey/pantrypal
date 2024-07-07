@@ -57,6 +57,7 @@ public class PantryItemMapper {
         dto.setUnit(pantryItem.getGroceryItem().getUnit());
         dto.setPurchasedDate(pantryItem.getGroceryItem().getPurchasedDate());
         dto.setExpirationDate(pantryItem.getGroceryItem().getExpirationDate());
+        dto.setGroceryType(pantryItem.getGroceryItem().getGroceryType());
         return dto;
     }
 }

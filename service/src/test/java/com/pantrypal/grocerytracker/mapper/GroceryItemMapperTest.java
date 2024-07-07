@@ -39,6 +39,7 @@ class GroceryItemMapperTest {
         assertEquals(dto.getUnit(), groceryItem.getUnit());
         assertEquals(dto.getPurchasedDate(), groceryItem.getPurchasedDate());
         assertEquals(dto.getExpirationDate(), groceryItem.getExpirationDate());
+        assertEquals(dto.getGroceryType(), groceryItem.getGroceryType());
         assertEquals(product, groceryItem.getProduct());
     }
 
@@ -61,6 +62,7 @@ class GroceryItemMapperTest {
         assertEquals(dto.getUnit(), groceryItem.getUnit());
         assertEquals(dto.getPurchasedDate(), groceryItem.getPurchasedDate());
         assertEquals(dto.getExpirationDate(), groceryItem.getExpirationDate());
+        assertEquals(dto.getGroceryType(), groceryItem.getGroceryType());
         assertEquals(product, groceryItem.getProduct());
     }
 
@@ -80,5 +82,6 @@ class GroceryItemMapperTest {
         assertEquals(groceryItem.getAmount(), dto.getAmount());
         assertEquals(groceryItem.getPurchasedDate(), dto.getPurchasedDate());
         assertEquals(groceryItem.getExpirationDate(), dto.getExpirationDate());
+        assertEquals(groceryItem.getGroceryType(), dto.getGroceryType());
     }
 }
