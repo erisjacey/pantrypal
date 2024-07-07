@@ -1,6 +1,8 @@
 package com.pantrypal.grocerytracker.dto;
 
 import com.pantrypal.grocerytracker.model.unit.Unit;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,10 +15,13 @@ public class ModifyAmountRequest {
     /**
      * The amount to modify.
      */
-    private double amount;
+    @NotNull
+    @PositiveOrZero
+    private Double amount;
 
     /**
      * The unit of measurement for the amount.
      */
+    @NotNull
     private Unit unit;
 }

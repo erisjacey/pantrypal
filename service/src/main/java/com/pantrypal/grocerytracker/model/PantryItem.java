@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 /**
@@ -27,12 +28,13 @@ public class PantryItem {
     /**
      * The grocery item associated with the pantry item.
      */
-    @OneToOne
+    @OneToOne(optional = false)
     @JoinColumn(name = Constants.GROCERY_ITEM_TABLE_ID_NAME, nullable = false)
     private GroceryItem groceryItem;
 
     /**
      * The quantity of the item in stock in the pantry.
      */
-    private double quantityInStock;
+    @NotNull
+    private Double quantityInStock;
 }

@@ -12,6 +12,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -33,14 +35,16 @@ public class GroceryItem {
     /**
      * The product associated with the grocery item.
      */
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = Constants.PRODUCT_TABLE_ID_NAME, nullable = false)
     private Product product;
 
     /**
      * The amount of the grocery item.
      */
-    private double amount;
+    @NotNull
+    @PositiveOrZero
+    private Double amount;
 
     /**
      * The unit of measurement for the amount.
@@ -61,5 +65,6 @@ public class GroceryItem {
      * The type of the grocery item.
      */
     @Enumerated(EnumType.STRING)
+    @NotNull
     private GroceryType groceryType;
 }
