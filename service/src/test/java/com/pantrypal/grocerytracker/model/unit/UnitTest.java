@@ -24,7 +24,7 @@ class UnitTest {
                 IllegalArgumentException.class, () -> Unit.fromString(invalidUnit)
         );
         assertEquals(
-                Constants.ILLEGAL_ARGUMENT_EXCEPTION_UNKNOWN_UNIT_STRING + invalidUnit,
+                Constants.ERROR_MESSAGE_UNKNOWN_UNIT_STRING + invalidUnit,
                 exception.getMessage()
         );
     }
