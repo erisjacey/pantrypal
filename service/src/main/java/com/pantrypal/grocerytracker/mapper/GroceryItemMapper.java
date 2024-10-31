@@ -27,6 +27,7 @@ public class GroceryItemMapper {
         groceryItem.setUnit(dto.getUnit());
         groceryItem.setPurchasedDate(dto.getPurchasedDate() != null ? dto.getPurchasedDate() : LocalDate.now());
         groceryItem.setExpirationDate(dto.getExpirationDate());
+        groceryItem.setGroceryType(dto.getGroceryType());
         return groceryItem;
     }
 
@@ -57,6 +58,7 @@ public class GroceryItemMapper {
         dto.setUnit(groceryItem.getUnit());
         dto.setPurchasedDate(groceryItem.getPurchasedDate());
         dto.setExpirationDate(groceryItem.getExpirationDate());
+        dto.setGroceryType(groceryItem.getGroceryType());
         return dto;
     }
 }

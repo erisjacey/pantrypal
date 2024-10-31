@@ -71,5 +71,6 @@ class PantryItemMapperTest {
         assertEquals(pantryItem.getGroceryItem().getUnit(), dto.getUnit());
         assertEquals(pantryItem.getGroceryItem().getPurchasedDate(), dto.getPurchasedDate());
         assertEquals(pantryItem.getGroceryItem().getExpirationDate(), dto.getExpirationDate());
+        assertEquals(pantryItem.getGroceryItem().getGroceryType(), dto.getGroceryType());
     }
 }
