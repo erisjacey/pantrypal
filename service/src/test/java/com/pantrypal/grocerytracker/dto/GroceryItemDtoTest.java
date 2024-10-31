@@ -1,5 +1,6 @@
 package com.pantrypal.grocerytracker.dto;
 
+import com.pantrypal.grocerytracker.model.enums.GroceryType;
 import com.pantrypal.grocerytracker.model.unit.Milliliter;
 import com.pantrypal.grocerytracker.model.unit.Unit;
 import com.pantrypal.grocerytracker.util.TestModels;
@@ -22,6 +23,7 @@ class GroceryItemDtoTest {
         Unit unit = new Milliliter();
         LocalDate purchasedDate = TestModels.DATE_NOW;
         LocalDate expirationDate = TestModels.DATE_YEAR_AFTER_NOW;
+        GroceryType groceryType = GroceryType.DAIRY;
 
         // Act
         groceryItemDto.setId(id);
@@ -30,6 +32,7 @@ class GroceryItemDtoTest {
         groceryItemDto.setUnit(unit);
         groceryItemDto.setPurchasedDate(purchasedDate);
         groceryItemDto.setExpirationDate(expirationDate);
+        groceryItemDto.setGroceryType(groceryType);
 
         // Assert
         assertEquals(id, groceryItemDto.getId());
@@ -38,5 +41,6 @@ class GroceryItemDtoTest {
         assertEquals(unit, groceryItemDto.getUnit());
         assertEquals(purchasedDate, groceryItemDto.getPurchasedDate());
         assertEquals(expirationDate, groceryItemDto.getExpirationDate());
+        assertEquals(groceryType, groceryItemDto.getGroceryType());
     }
 }

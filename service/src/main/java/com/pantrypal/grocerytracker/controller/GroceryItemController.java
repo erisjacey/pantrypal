@@ -6,6 +6,7 @@ import com.pantrypal.grocerytracker.service.GroceryItemService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,7 +55,7 @@ public class GroceryItemController {
     public ResponseEntity<GroceryItemDto> createGroceryItem(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Details of the grocery item to be created"
-            ) @RequestBody GroceryItemDto groceryItem
+            ) @Valid @RequestBody GroceryItemDto groceryItem
     ) {
         GroceryItemDto createdItem = groceryItemService.createGroceryItem(groceryItem);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdItem);
@@ -66,7 +67,7 @@ public class GroceryItemController {
             @PathVariable @Parameter(description = "ID of the grocery item to be updated") Long id,
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Updated details of the grocery item"
-            ) @RequestBody GroceryItemDto updatedItem
+            ) @Valid @RequestBody GroceryItemDto updatedItem
     ) {
         Optional<GroceryItemDto> existingItem = groceryItemService.getGroceryItemById(id);
         return existingItem.map(item -> {

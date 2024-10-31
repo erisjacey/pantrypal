@@ -7,6 +7,7 @@ import com.pantrypal.grocerytracker.service.PantryItemService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,7 +53,7 @@ public class PantryItemController {
             @PathVariable @Parameter(description = "ID of the pantry item to be modified") Long id,
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Request body containing the new quantity"
-            ) @RequestBody ModifyAmountRequest request
+            ) @Valid @RequestBody ModifyAmountRequest request
     ) {
         PantryItemDto modifiedItem = pantryItemService.modifyPantryItemQuantity(id, request);
         return ResponseEntity.ok(modifiedItem);
