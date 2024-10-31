@@ -12,6 +12,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      SPRING_FLYWAY_PASSWORD: ${{ secrets.SPRING_FLYWAY_PASSWORD }}
+      SPRING_PROFILES_ACTIVE: test
+      BASE64_PRIVATE_KEY: ${{ secrets.BASE64_PRIVATE_KEY }}
+      PATH_PRIVATE_KEY: ${{ secrets.PATH_PRIVATE_KEY }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -23,8 +29,11 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Set up environment variables
-        run: echo "SPRING_PROFILES_ACTIVE=test" >> $GITHUB_ENV
+      - name: Create private key directory and file
+        run: |
+          mkdir -p $(dirname "$PATH_PRIVATE_KEY")
+          echo "$BASE64_PRIVATE_KEY" | base64 --decode > "$PATH_PRIVATE_KEY"
+        shell: bash
 
       - name: Build with Maven
         run: mvn -f service/pom.xml clean test
