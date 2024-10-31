@@ -1,0 +1,38 @@
+name: Run Unit Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      SPRING_FLYWAY_PASSWORD: ${{ secrets.SPRING_FLYWAY_PASSWORD }}
+      SPRING_PROFILES_ACTIVE: test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Create private key file
+        run: |
+          echo "${{ secrets.BASE64_PRIVATE_KEY }}" | base64 --decode > /path/to/private-key-pkcs8.pem
+        shell: bash
+
+      - name: Build with Maven
+        run: mvn -f service/pom.xml clean test
+        env:
+          PATH_PRIVATE_KEY: file:/path/to/private-key-pkcs8.pem
