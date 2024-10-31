@@ -15,12 +15,16 @@ jobs:
     env:
       SPRING_FLYWAY_PASSWORD: ${{ secrets.SPRING_FLYWAY_PASSWORD }}
       SPRING_PROFILES_ACTIVE: test
-      BASE64_PRIVATE_KEY: ${{ secrets.BASE64_PRIVATE_KEY }}
-      PATH_PRIVATE_KEY: ${{ secrets.PATH_PRIVATE_KEY }}
+      PATH_PRIVATE_KEY: ${{ github.workspace }}/certs/private-key-pkcs8.pem
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Create certs directory and private key file
+        run: |
+          mkdir -p $(dirname "$PATH_PRIVATE_KEY")
+          echo "${{ secrets.BASE64_PRIVATE_KEY }}" | base64 --decode > "$PATH_PRIVATE_KEY"
 
       - name: Set up JDK
         uses: actions/setup-java@v2
@@ -29,11 +33,8 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Create private key directory and file
-        run: |
-          mkdir -p $(dirname "$PATH_PRIVATE_KEY")
-          echo "$BASE64_PRIVATE_KEY" | base64 --decode > "$PATH_PRIVATE_KEY"
-        shell: bash
-
       - name: Build with Maven
         run: mvn -f service/pom.xml clean test
+        env:
+          PATH_PRIVATE_KEY: file:${{ github.workspace }}/certs/private-key-pkcs8.pem
+
