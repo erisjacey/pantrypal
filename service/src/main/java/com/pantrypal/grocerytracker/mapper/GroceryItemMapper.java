@@ -3,6 +3,7 @@ package com.pantrypal.grocerytracker.mapper;
 import com.pantrypal.grocerytracker.dto.GroceryItemDto;
 import com.pantrypal.grocerytracker.model.GroceryItem;
 import com.pantrypal.grocerytracker.model.Product;
+import com.pantrypal.grocerytracker.model.User;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -14,14 +15,16 @@ import java.time.LocalDate;
 @Component
 public class GroceryItemMapper {
     /**
-     * Maps a {@link GroceryItemDto} and a {@link Product} to a {@link GroceryItem} entity.
+     * Maps a {@link GroceryItemDto}, a {@link User} and a {@link Product} to a {@link GroceryItem} entity.
      *
      * @param dto     The DTO containing information about the grocery item.
+     * @param user    The user who owns the grocery item.
      * @param product The associated product of the grocery item.
      * @return The mapped {@link GroceryItem} entity.
      */
-    public GroceryItem mapToEntity(GroceryItemDto dto, Product product) {
+    public GroceryItem mapToEntity(GroceryItemDto dto, User user, Product product) {
         GroceryItem groceryItem = new GroceryItem();
+        groceryItem.setUser(user);
         groceryItem.setProduct(product);
         groceryItem.setAmount(dto.getAmount());
         groceryItem.setUnit(dto.getUnit());
@@ -32,14 +35,15 @@ public class GroceryItemMapper {
     }
 
     /**
-     * Maps a {@link GroceryItemDto} and a {@link Product} to a {@link GroceryItem} entity with the provided ID.
+     * Maps a {@link GroceryItemDto}, a {@link User} and a {@link Product} to a {@link GroceryItem} entity with the provided ID.
      *
      * @param dto     The DTO containing information about the grocery item.
+     * @param user    The user who owns the grocery item.
      * @param product The associated product of the grocery item.
      * @return The mapped {@link GroceryItem} entity with the provided ID.
      */
-    public GroceryItem mapToEntityWithId(GroceryItemDto dto, Product product) {
-        GroceryItem groceryItem = mapToEntity(dto, product);
+    public GroceryItem mapToEntityWithId(GroceryItemDto dto, User user, Product product) {
+        GroceryItem groceryItem = mapToEntity(dto, user, product);
         groceryItem.setId(dto.getId());
         return groceryItem;
     }

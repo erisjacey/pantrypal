@@ -1,13 +1,16 @@
 package com.pantrypal.grocerytracker.service;
 
+import com.pantrypal.grocerytracker.dto.auth.AuthRegisterRequest;
 import com.pantrypal.grocerytracker.model.User;
 
 import java.util.Optional;
 
 public interface UserService {
-    User registerUser(User user);
+    void registerUser(AuthRegisterRequest request, String encodedPassword);
 
-    Optional<User> findUserByUsername(String username);
+    Optional<User> getUserById(Long id);
 
-    Optional<User> findUserByEmail(String email);
+    Optional<User> getUserByUsername(String username);
+
+    Optional<User> getUserByEmail(String email);
 }

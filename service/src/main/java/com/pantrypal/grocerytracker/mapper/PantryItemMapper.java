@@ -22,6 +22,7 @@ public class PantryItemMapper {
     public PantryItem mapToEntity(GroceryItem groceryItem) {
         PantryItem pantryItem = new PantryItem();
         pantryItem.setGroceryItem(groceryItem);
+        pantryItem.setUser(groceryItem.getUser());
         pantryItem.setQuantityInStock(groceryItem.getAmount());
         return pantryItem;
     }
@@ -35,10 +36,8 @@ public class PantryItemMapper {
      * @return The mapped {@link PantryItem} entity with the provided ID.
      */
     public PantryItem mapToEntityWithId(GroceryItem groceryItem, Long pantryItemId) {
-        PantryItem pantryItem = new PantryItem();
+        PantryItem pantryItem = mapToEntity(groceryItem);
         pantryItem.setId(pantryItemId);
-        pantryItem.setGroceryItem(groceryItem);
-        pantryItem.setQuantityInStock(groceryItem.getAmount());
         return pantryItem;
     }
 

@@ -6,6 +6,7 @@ import com.pantrypal.grocerytracker.model.unit.Unit;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -31,6 +32,13 @@ public class GroceryItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    /**
+     * The user who owns the grocery item.
+     */
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = Constants.USER_TABLE_ID_NAME, nullable = false)
+    private User user;
 
     /**
      * The product associated with the grocery item.

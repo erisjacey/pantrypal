@@ -42,17 +42,19 @@ public interface PantryItemService {
      * Used as a transitive step in {@link GroceryItemService#updateGroceryItem}.
      *
      * @param updatedItem The updated grocery item to be stored in the pantry.
+     * @param userId      The ID of the user who owns the grocery item.
      * @return The {@link PantryItemDto} representing the updated pantry item.
      */
-    PantryItemDto updateGroceryItemInPantry(GroceryItem updatedItem);
+    PantryItemDto updateGroceryItemInPantry(GroceryItem updatedItem, Long userId);
 
     /**
      * Deletes a grocery item from the pantry.
      * Used as a transitive step in {@link GroceryItemService#deleteGroceryItem}.
      *
      * @param groceryItemId The ID of the grocery item to delete from the pantry.
+     * @param userId        The ID of the user who owns the grocery item.
      */
-    void deleteGroceryItemInPantry(Long groceryItemId);
+    void deleteGroceryItemInPantry(Long groceryItemId, Long userId);
 
     /**
      * Modifies the quantity of an existing pantry item.

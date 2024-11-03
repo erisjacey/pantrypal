@@ -5,12 +5,9 @@ import com.pantrypal.grocerytracker.dto.auth.AuthLoginRequest;
 import com.pantrypal.grocerytracker.dto.auth.AuthRegisterRequest;
 import com.pantrypal.grocerytracker.dto.auth.AuthRequest;
 import com.pantrypal.grocerytracker.dto.auth.AuthResponse;
-import com.pantrypal.grocerytracker.exception.custom.EmailAlreadyRegisteredException;
-import com.pantrypal.grocerytracker.exception.custom.UsernameAlreadyExistsException;
-import com.pantrypal.grocerytracker.mapper.UserMapper;
-import com.pantrypal.grocerytracker.model.User;
-import com.pantrypal.grocerytracker.repository.UserRepository;
+import com.pantrypal.grocerytracker.model.AuthUser;
 import com.pantrypal.grocerytracker.service.AuthService;
+import com.pantrypal.grocerytracker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
@@ -29,22 +27,19 @@ import java.util.stream.Collectors;
 
 @Service
 public class AuthServiceImpl implements AuthService {
-    private final UserRepository userRepository;
-    private final UserMapper userMapper;
+    private final UserService userService;
     private final JwtEncoder jwtEncoder;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public AuthServiceImpl(
-            UserRepository userRepository,
-            UserMapper userMapper,
+            UserService userService,
             JwtEncoder jwtEncoder,
             AuthenticationManager authenticationManager,
             PasswordEncoder passwordEncoder
     ) {
-        this.userRepository = userRepository;
-        this.userMapper = userMapper;
+        this.userService = userService;
         this.jwtEncoder = jwtEncoder;
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
@@ -59,23 +54,11 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthResponse registerUser(AuthRegisterRequest request) {
-        // Check if the username or email already exists
-        if (userRepository.existsByUsername(request.getUsername())) {
-            throw new UsernameAlreadyExistsException();
-        }
-
-        if (userRepository.existsByEmail(request.getEmail())) {
-            throw new EmailAlreadyRegisteredException();
-        }
-
         // Encode the password
         String encodedPassword = passwordEncoder.encode(request.getPassword());
 
-        // Map the request and encoded password to the entity to save
-        User user = userMapper.mapToEntity(request, encodedPassword);
-
-        // Save the user to the database
-        userRepository.save(user);
+        // Register user with user service
+        userService.registerUser(request, encodedPassword);
 
         // Authenticate user and generate token
         Authentication authentication = authenticateUser(request);
@@ -83,6 +66,16 @@ public class AuthServiceImpl implements AuthService {
 
         // Return a success response
         return new AuthResponse(Constants.SUCCESS_MESSAGE_USER_REGISTERED, token);
+    }
+
+    @Override
+    public Long getCurrentUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !(authentication.getPrincipal() instanceof Jwt jwt)) {
+            throw new IllegalStateException(Constants.ERROR_MESSAGE_INVALID_AUTHENTICATION);
+        }
+
+        return jwt.getClaim(Constants.JWT_KEY_USER_ID);
     }
 
     private Authentication authenticateUser(AuthRequest request) {
@@ -107,7 +100,8 @@ public class AuthServiceImpl implements AuthService {
                 .issuedAt(now)
                 .expiresAt(now.plus(10, ChronoUnit.HOURS))
                 .subject(authentication.getName())
-                .claim("scope", scope)
+                .claim(Constants.JWT_KEY_SCOPE, scope)
+                .claim(Constants.JWT_KEY_USER_ID, ((AuthUser) authentication.getPrincipal()).getId())
                 .build();
 
         return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();

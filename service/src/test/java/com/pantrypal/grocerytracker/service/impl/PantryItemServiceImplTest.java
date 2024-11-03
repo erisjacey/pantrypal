@@ -7,6 +7,7 @@ import com.pantrypal.grocerytracker.mapper.PantryItemMapper;
 import com.pantrypal.grocerytracker.model.GroceryItem;
 import com.pantrypal.grocerytracker.model.PantryItem;
 import com.pantrypal.grocerytracker.repository.PantryItemRepository;
+import com.pantrypal.grocerytracker.service.AuthService;
 import com.pantrypal.grocerytracker.service.PantryItemService;
 import com.pantrypal.grocerytracker.util.TestModels;
 import jakarta.persistence.EntityNotFoundException;
@@ -33,24 +34,30 @@ class PantryItemServiceImplTest {
 
     private PantryItemRepository pantryItemRepository;
     private PantryItemMapper pantryItemMapper;
+    private AuthService authService;
     private PantryItemService pantryItemService;
 
     @BeforeEach
     void setUp() {
         pantryItemRepository = mock(PantryItemRepository.class);
         pantryItemMapper = mock(PantryItemMapper.class);
-        pantryItemService = new PantryItemServiceImpl(pantryItemRepository, pantryItemMapper);
+        authService = mock(AuthService.class);
+        pantryItemService = new PantryItemServiceImpl(pantryItemRepository, pantryItemMapper, authService);
     }
 
     @Test
     @DisplayName("Test get all pantry items")
     void getAllPantryItems() {
         // Arrange
+        long userId = TestModels.ID_1;
         List<PantryItem> mockPantryItems = TestModels.getListOfTwoPantryItems();
         List<PantryItemDto> mockPantryItemDtos = TestModels.getListOfTwoPantryItemDtos();
 
+        // Mock auth service behavior
+        when(authService.getCurrentUserId()).thenReturn(userId);
+
         // Mock repository behavior
-        when(pantryItemRepository.findAll()).thenReturn(mockPantryItems);
+        when(pantryItemRepository.findByUserId(userId)).thenReturn(mockPantryItems);
 
         // Mock mapper behavior
         when(pantryItemMapper.mapToDto(mockPantryItems.get(0))).thenReturn(TestModels.getMilkPantryItemDto());
@@ -70,11 +77,15 @@ class PantryItemServiceImplTest {
     void getPantryItemById() {
         // Arrange
         long itemId = TestModels.ID_3;
+        long userId = TestModels.ID_1;
         PantryItem mockPantryItem = TestModels.getMilkPantryItem();
         PantryItemDto mockPantryItemDto = TestModels.getMilkPantryItemDto();
 
+        // Mock auth service behavior
+        when(authService.getCurrentUserId()).thenReturn(userId);
+
         // Mock repository behavior
-        when(pantryItemRepository.findById(itemId)).thenReturn(Optional.of(mockPantryItem));
+        when(pantryItemRepository.findByIdAndUserId(itemId, userId)).thenReturn(Optional.of(mockPantryItem));
 
         // Mock mapper behavior
         when(pantryItemMapper.mapToDto(mockPantryItem)).thenReturn(mockPantryItemDto);
@@ -119,13 +130,14 @@ class PantryItemServiceImplTest {
         // Arrange
         long updatedGroceryItemId = TestModels.ID_2;
         long existingPantryItemId = TestModels.ID_3;
+        long userId = TestModels.ID_1;
         GroceryItem mockUpdatedGroceryItem = TestModels.getButterGroceryItem();
         PantryItem mockUpdatedPantryItem = TestModels.getButterPantryItem();
         PantryItem mockExistingPantryItem = TestModels.getMilkPantryItem();
         PantryItemDto mockUpdatedPantryItemDto = TestModels.getButterPantryItemDto();
 
         // Mock repository behavior
-        when(pantryItemRepository.findByGroceryItem_Id(updatedGroceryItemId))
+        when(pantryItemRepository.findByGroceryItemIdAndUserId(updatedGroceryItemId, userId))
                 .thenReturn(Optional.of(mockExistingPantryItem));
         when(pantryItemRepository.save(mockUpdatedPantryItem)).thenReturn(mockUpdatedPantryItem);
 
@@ -135,7 +147,7 @@ class PantryItemServiceImplTest {
         when(pantryItemMapper.mapToDto(mockUpdatedPantryItem)).thenReturn(mockUpdatedPantryItemDto);
 
         // Act
-        PantryItemDto result = pantryItemService.updateGroceryItemInPantry(mockUpdatedGroceryItem);
+        PantryItemDto result = pantryItemService.updateGroceryItemInPantry(mockUpdatedGroceryItem, userId);
 
         // Assert
         assertNotNull(result);
@@ -149,11 +161,12 @@ class PantryItemServiceImplTest {
     void updateGroceryItemInPantry_pantryItemDoesNotExist() {
         // Arrange
         long updatedGroceryItemId = TestModels.ID_2;
+        long userId = TestModels.ID_1;
         GroceryItem mockUpdatedGroceryItem = TestModels.getButterGroceryItem();
 
         // Act
         Throwable exception = assertThrows(EntityNotFoundException.class, () ->
-                    pantryItemService.updateGroceryItemInPantry(mockUpdatedGroceryItem)
+                pantryItemService.updateGroceryItemInPantry(mockUpdatedGroceryItem, userId)
         );
 
         // Assert
@@ -171,12 +184,13 @@ class PantryItemServiceImplTest {
     void deleteGroceryItemInPantry() {
         // Arrange
         long itemId = TestModels.ID_1;
+        long userId = TestModels.ID_1;
 
         // Act
-        pantryItemService.deleteGroceryItemInPantry(itemId);
+        pantryItemService.deleteGroceryItemInPantry(itemId, userId);
 
         // Assert
-        verify(pantryItemRepository).deleteByGroceryItem_Id(itemId);
+        verify(pantryItemRepository).deleteByGroceryItemIdAndUserId(itemId, userId);
     }
 
     @Test
@@ -184,6 +198,7 @@ class PantryItemServiceImplTest {
     void modifyPantryItemQuantity() {
         // Arrange
         long itemId = TestModels.ID_3;
+        long userId = TestModels.ID_1;
         ModifyAmountRequest request = TestModels.getModifyAmountRequest();
         PantryItem mockExistingPantryItem = TestModels.getMilkPantryItem();
         PantryItem mockModifiedPantryItem = TestModels.getMilkPantryItem();
@@ -191,8 +206,11 @@ class PantryItemServiceImplTest {
         mockModifiedPantryItem.setQuantityInStock(TestModels.AMOUNT_2_POINT_3);
         mockModifiedPantryItemDto.setCurrentAmount(TestModels.AMOUNT_2_POINT_3);
 
+        // Mock auth service behavior
+        when(authService.getCurrentUserId()).thenReturn(userId);
+
         // Mock repository behavior
-        when(pantryItemRepository.findById(itemId)).thenReturn(Optional.of(mockExistingPantryItem));
+        when(pantryItemRepository.findByIdAndUserId(itemId, userId)).thenReturn(Optional.of(mockExistingPantryItem));
         when(pantryItemRepository.save(mockExistingPantryItem)).thenReturn(mockModifiedPantryItem);
 
         // Mock mapper behavior
@@ -233,13 +251,18 @@ class PantryItemServiceImplTest {
     void modifyPantryItemQuantity_insufficientQuantity() {
         // Arrange
         long itemId = TestModels.ID_3;
+        long userId = TestModels.ID_1;
         ModifyAmountRequest mockRequest = TestModels.getModifyAmountRequest();
         PantryItem mockExistingPantryItem = TestModels.getMilkPantryItem();
+
         // Set quantityInStock to 0.1L to force insufficient quantity
         mockExistingPantryItem.setQuantityInStock(TestModels.AMOUNT_0_POINT_1);
 
+        // Mock auth service behavior
+        when(authService.getCurrentUserId()).thenReturn(userId);
+
         // Mock repository behavior
-        when(pantryItemRepository.findById(itemId)).thenReturn(Optional.of(mockExistingPantryItem));
+        when(pantryItemRepository.findByIdAndUserId(itemId, userId)).thenReturn(Optional.of(mockExistingPantryItem));
 
         // Act
         Throwable exception = assertThrows(IllegalArgumentException.class, () ->

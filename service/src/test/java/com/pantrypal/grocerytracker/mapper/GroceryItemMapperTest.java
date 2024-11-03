@@ -3,6 +3,7 @@ package com.pantrypal.grocerytracker.mapper;
 import com.pantrypal.grocerytracker.dto.GroceryItemDto;
 import com.pantrypal.grocerytracker.model.GroceryItem;
 import com.pantrypal.grocerytracker.model.Product;
+import com.pantrypal.grocerytracker.model.User;
 import com.pantrypal.grocerytracker.util.TestModels;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
@@ -12,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Set;
@@ -23,19 +23,19 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-@ActiveProfiles("test")
 class GroceryItemMapperTest {
     private GroceryItemMapper mapper;
+
+    @Autowired
+    private Validator validator;
 
     @BeforeEach
     void setUp() {
         this.mapper = new GroceryItemMapper();
     }
 
-    @Autowired
-    private Validator validator;
-
     @Test
+    @DisplayName("Test validation - null fields")
     public void testValidation_NullFields() {
         // Arrange: Create a DTO with null values
         GroceryItemDto dto = TestModels.getButterGroceryItemDto();
@@ -54,13 +54,15 @@ class GroceryItemMapperTest {
     void mapToEntity() {
         // Assemble
         GroceryItemDto dto = TestModels.getButterGroceryItemDto();
+        User user = TestModels.getUser();
         Product product = TestModels.getButterProduct();
 
         // Act
-        GroceryItem groceryItem = mapper.mapToEntity(dto, product);
+        GroceryItem groceryItem = mapper.mapToEntity(dto, user, product);
 
         // Assert
         assertNotNull(groceryItem);
+        assertNotNull(groceryItem.getUser());
         assertNotNull(groceryItem.getProduct());
         assertNull(groceryItem.getId());
         assertEquals(dto.getName(), groceryItem.getProduct().getName());
@@ -69,6 +71,7 @@ class GroceryItemMapperTest {
         assertEquals(dto.getPurchasedDate(), groceryItem.getPurchasedDate());
         assertEquals(dto.getExpirationDate(), groceryItem.getExpirationDate());
         assertEquals(dto.getGroceryType(), groceryItem.getGroceryType());
+        assertEquals(user, groceryItem.getUser());
         assertEquals(product, groceryItem.getProduct());
     }
 
@@ -77,13 +80,15 @@ class GroceryItemMapperTest {
     void mapToEntityWithId() {
         // Assemble
         GroceryItemDto dto = TestModels.getMilkGroceryItemDto();
+        User user = TestModels.getUser();
         Product product = TestModels.getMilkProduct();
 
         // Act
-        GroceryItem groceryItem = mapper.mapToEntityWithId(dto, product);
+        GroceryItem groceryItem = mapper.mapToEntityWithId(dto, user, product);
 
         // Assert
         assertNotNull(groceryItem);
+        assertNotNull(groceryItem.getUser());
         assertNotNull(groceryItem.getProduct());
         assertEquals(dto.getId(), groceryItem.getId());
         assertEquals(dto.getName(), groceryItem.getProduct().getName());
@@ -92,6 +97,7 @@ class GroceryItemMapperTest {
         assertEquals(dto.getPurchasedDate(), groceryItem.getPurchasedDate());
         assertEquals(dto.getExpirationDate(), groceryItem.getExpirationDate());
         assertEquals(dto.getGroceryType(), groceryItem.getGroceryType());
+        assertEquals(user, groceryItem.getUser());
         assertEquals(product, groceryItem.getProduct());
     }
 
