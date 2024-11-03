@@ -1,4 +1,4 @@
--- V4__set_up_users.sql
+-- V2__set_up_users.sql
 
 -- Create users table
 CREATE TABLE IF NOT EXISTS users (

@@ -22,6 +22,7 @@ public class Constants {
     // Table column names
     public static final String PRODUCT_TABLE_ID_NAME = "product_id";
     public static final String GROCERY_ITEM_TABLE_ID_NAME = "grocery_item_id";
+    public static final String USER_TABLE_ID_NAME = "user_id";
 
     // Alive endpoint path
     public static final String ALIVE_ENDPOINT_PATH = "/alive";
@@ -80,4 +81,7 @@ public class Constants {
     // Qualifier bean names
     public static final String BEAN_HANDLER_EXCEPTION_RESOLVER = "handlerExceptionResolver";
 
+    // JWT keys
+    public static final String JWT_KEY_SCOPE = "scope";
+    public static final String JWT_KEY_USER_ID = "userId";
 }

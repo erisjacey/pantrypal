@@ -39,7 +39,7 @@ public class PantryItemController {
 
     @Operation(summary = "Get a single pantry item by ID")
     @GetMapping(Constants.PANTRY_ITEM_API_GET_BY_ID)
-    public ResponseEntity<PantryItemDto> getGroceryItemById(
+    public ResponseEntity<PantryItemDto> getPantryItemById(
             @PathVariable @Parameter(description = "ID of the pantry item") Long id
     ) {
         Optional<PantryItemDto> optionalPantryItem = pantryItemService.getPantryItemById(id);

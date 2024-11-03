@@ -52,7 +52,7 @@ class PantryItemControllerTest {
 
     @Test
     @DisplayName("Test get pantry item by ID - item found")
-    void getGroceryItemById_itemFound() {
+    void getPantryItemById_itemFound() {
         // Arrange
         long itemId = TestModels.ID_3;
         PantryItemDto mockPantryItemDto = TestModels.getMilkPantryItemDto();
@@ -61,7 +61,7 @@ class PantryItemControllerTest {
         when(pantryItemService.getPantryItemById(itemId)).thenReturn(Optional.of(mockPantryItemDto));
 
         // Act
-        ResponseEntity<PantryItemDto> result = pantryItemController.getGroceryItemById(itemId);
+        ResponseEntity<PantryItemDto> result = pantryItemController.getPantryItemById(itemId);
 
         // Assert
         assertEquals(HttpStatus.OK, result.getStatusCode());
@@ -72,7 +72,7 @@ class PantryItemControllerTest {
 
     @Test
     @DisplayName("Test get pantry item by ID - item not found")
-    void getGroceryItemById_itemNotFound() {
+    void getPantryItemById_itemNotFound() {
         // Arrange
         long itemId = TestModels.ID_3;
 
@@ -80,7 +80,7 @@ class PantryItemControllerTest {
         when(pantryItemService.getPantryItemById(itemId)).thenReturn(Optional.empty());
 
         // Act
-        ResponseEntity<PantryItemDto> result = pantryItemController.getGroceryItemById(itemId);
+        ResponseEntity<PantryItemDto> result = pantryItemController.getPantryItemById(itemId);
 
         // Assert
         assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());

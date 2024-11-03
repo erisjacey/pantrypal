@@ -3,6 +3,7 @@ package com.pantrypal.grocerytracker.mapper;
 import com.pantrypal.grocerytracker.dto.GroceryItemDto;
 import com.pantrypal.grocerytracker.model.GroceryItem;
 import com.pantrypal.grocerytracker.model.Product;
+import com.pantrypal.grocerytracker.model.User;
 import com.pantrypal.grocerytracker.util.TestModels;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
@@ -54,13 +55,15 @@ class GroceryItemMapperTest {
     void mapToEntity() {
         // Assemble
         GroceryItemDto dto = TestModels.getButterGroceryItemDto();
+        User user = TestModels.getUser();
         Product product = TestModels.getButterProduct();
 
         // Act
-        GroceryItem groceryItem = mapper.mapToEntity(dto, product);
+        GroceryItem groceryItem = mapper.mapToEntity(dto, user, product);
 
         // Assert
         assertNotNull(groceryItem);
+        assertNotNull(groceryItem.getUser());
         assertNotNull(groceryItem.getProduct());
         assertNull(groceryItem.getId());
         assertEquals(dto.getName(), groceryItem.getProduct().getName());
@@ -69,6 +72,7 @@ class GroceryItemMapperTest {
         assertEquals(dto.getPurchasedDate(), groceryItem.getPurchasedDate());
         assertEquals(dto.getExpirationDate(), groceryItem.getExpirationDate());
         assertEquals(dto.getGroceryType(), groceryItem.getGroceryType());
+        assertEquals(user, groceryItem.getUser());
         assertEquals(product, groceryItem.getProduct());
     }
 
@@ -77,13 +81,15 @@ class GroceryItemMapperTest {
     void mapToEntityWithId() {
         // Assemble
         GroceryItemDto dto = TestModels.getMilkGroceryItemDto();
+        User user = TestModels.getUser();
         Product product = TestModels.getMilkProduct();
 
         // Act
-        GroceryItem groceryItem = mapper.mapToEntityWithId(dto, product);
+        GroceryItem groceryItem = mapper.mapToEntityWithId(dto, user, product);
 
         // Assert
         assertNotNull(groceryItem);
+        assertNotNull(groceryItem.getUser());
         assertNotNull(groceryItem.getProduct());
         assertEquals(dto.getId(), groceryItem.getId());
         assertEquals(dto.getName(), groceryItem.getProduct().getName());
@@ -92,6 +98,7 @@ class GroceryItemMapperTest {
         assertEquals(dto.getPurchasedDate(), groceryItem.getPurchasedDate());
         assertEquals(dto.getExpirationDate(), groceryItem.getExpirationDate());
         assertEquals(dto.getGroceryType(), groceryItem.getGroceryType());
+        assertEquals(user, groceryItem.getUser());
         assertEquals(product, groceryItem.getProduct());
     }
 

@@ -8,6 +8,7 @@ import com.pantrypal.grocerytracker.dto.auth.AuthResponse;
 import com.pantrypal.grocerytracker.exception.custom.EmailAlreadyRegisteredException;
 import com.pantrypal.grocerytracker.exception.custom.UsernameAlreadyExistsException;
 import com.pantrypal.grocerytracker.mapper.UserMapper;
+import com.pantrypal.grocerytracker.model.AuthUser;
 import com.pantrypal.grocerytracker.model.User;
 import com.pantrypal.grocerytracker.repository.UserRepository;
 import com.pantrypal.grocerytracker.service.AuthService;
@@ -18,6 +19,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
@@ -85,6 +87,16 @@ public class AuthServiceImpl implements AuthService {
         return new AuthResponse(Constants.SUCCESS_MESSAGE_USER_REGISTERED, token);
     }
 
+    @Override
+    public Long getCurrentUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !(authentication.getPrincipal() instanceof Jwt jwt)) {
+            throw new IllegalStateException("No valid authentication found for the current user.");
+        }
+
+        return jwt.getClaim(Constants.JWT_KEY_USER_ID);
+    }
+
     private Authentication authenticateUser(AuthRequest request) {
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(
@@ -107,7 +119,8 @@ public class AuthServiceImpl implements AuthService {
                 .issuedAt(now)
                 .expiresAt(now.plus(10, ChronoUnit.HOURS))
                 .subject(authentication.getName())
-                .claim("scope", scope)
+                .claim(Constants.JWT_KEY_SCOPE, scope)
+                .claim(Constants.JWT_KEY_USER_ID, ((AuthUser) authentication.getPrincipal()).getId())
                 .build();
 
         return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();

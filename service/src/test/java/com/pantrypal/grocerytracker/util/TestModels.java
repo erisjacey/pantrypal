@@ -6,6 +6,7 @@ import com.pantrypal.grocerytracker.dto.PantryItemDto;
 import com.pantrypal.grocerytracker.model.GroceryItem;
 import com.pantrypal.grocerytracker.model.PantryItem;
 import com.pantrypal.grocerytracker.model.Product;
+import com.pantrypal.grocerytracker.model.User;
 import com.pantrypal.grocerytracker.model.enums.GroceryType;
 import com.pantrypal.grocerytracker.model.unit.Gram;
 import com.pantrypal.grocerytracker.model.unit.Liter;
@@ -25,6 +26,11 @@ public class TestModels {
     public static final String PRODUCT_NAME_MILK = "Milk";
     public static final String PRODUCT_NAME_BUTTER = "Butter";
 
+    // User credentials
+    public static final String USER_USERNAME = "username";
+    public static final String USER_EMAIL = "email@mail.com";
+    public static final String USER_PASSWORD = "pass123";
+
     // Amounts
     public static final double AMOUNT_0_POINT_1 = 0.1;
     public static final double AMOUNT_2_POINT_3 = 2.3;
@@ -40,6 +46,15 @@ public class TestModels {
     public static final LocalDate DATE_MONTH_AFTER_NOW = LocalDate.now().plusMonths(1);
     public static final LocalDate DATE_YEAR_AFTER_NOW = LocalDate.now().plusYears(1);
 
+    public static User getUser() {
+        User user = new User();
+        user.setId(ID_1);
+        user.setUsername(USER_USERNAME);
+        user.setEmail(USER_EMAIL);
+        user.setPassword(USER_PASSWORD);
+        return user;
+    }
+
     public static Product getMilkProduct() {
         Product product = new Product(PRODUCT_NAME_MILK);
         product.setId(ID_1);
@@ -54,6 +69,7 @@ public class TestModels {
 
     public static GroceryItem getMilkGroceryItem() {
         GroceryItem groceryItem = new GroceryItem();
+        groceryItem.setUser(getUser());
         groceryItem.setProduct(getMilkProduct());
         groceryItem.setId(ID_1);
         groceryItem.setAmount(AMOUNT_2_POINT_5);
@@ -78,6 +94,7 @@ public class TestModels {
 
     public static GroceryItem getButterGroceryItem() {
         GroceryItem groceryItem = new GroceryItem();
+        groceryItem.setUser(getUser());
         groceryItem.setProduct(getButterProduct());
         groceryItem.setId(ID_2);
         groceryItem.setAmount(AMOUNT_500);
@@ -110,8 +127,8 @@ public class TestModels {
 
     public static PantryItem getMilkPantryItem() {
         PantryItem pantryItem = new PantryItem();
-        GroceryItem groceryItem = getMilkGroceryItem();
-        pantryItem.setGroceryItem(groceryItem);
+        pantryItem.setGroceryItem(getMilkGroceryItem());
+        pantryItem.setUser(getUser());
         pantryItem.setId(ID_3);
         pantryItem.setQuantityInStock(AMOUNT_2_POINT_5);
         return pantryItem;
@@ -132,8 +149,8 @@ public class TestModels {
 
     public static PantryItem getButterPantryItem() {
         PantryItem pantryItem = new PantryItem();
-        GroceryItem groceryItem = getButterGroceryItem();
-        pantryItem.setGroceryItem(groceryItem);
+        pantryItem.setGroceryItem(getButterGroceryItem());
+        pantryItem.setUser(getUser());
         pantryItem.setId(ID_4);
         pantryItem.setQuantityInStock(AMOUNT_500);
         return pantryItem;
