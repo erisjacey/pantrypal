@@ -9,7 +9,6 @@ import com.pantrypal.grocerytracker.model.PantryItem;
 import com.pantrypal.grocerytracker.repository.PantryItemRepository;
 import com.pantrypal.grocerytracker.service.AuthService;
 import com.pantrypal.grocerytracker.service.PantryItemService;
-import com.pantrypal.grocerytracker.service.UserService;
 import com.pantrypal.grocerytracker.util.TestModels;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,8 +34,8 @@ class PantryItemServiceImplTest {
 
     private PantryItemRepository pantryItemRepository;
     private PantryItemMapper pantryItemMapper;
-    private PantryItemService pantryItemService;
     private AuthService authService;
+    private PantryItemService pantryItemService;
 
     @BeforeEach
     void setUp() {
@@ -167,7 +166,7 @@ class PantryItemServiceImplTest {
 
         // Act
         Throwable exception = assertThrows(EntityNotFoundException.class, () ->
-                    pantryItemService.updateGroceryItemInPantry(mockUpdatedGroceryItem, userId)
+                pantryItemService.updateGroceryItemInPantry(mockUpdatedGroceryItem, userId)
         );
 
         // Assert

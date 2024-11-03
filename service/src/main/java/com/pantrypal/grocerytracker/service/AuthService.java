@@ -16,5 +16,5 @@ public interface AuthService {
      * @return The user ID of the authenticated user.
      * @throws IllegalStateException if no authentication is present or token is invalid.
      */
-    public Long getCurrentUserId();
+    Long getCurrentUserId();
 }

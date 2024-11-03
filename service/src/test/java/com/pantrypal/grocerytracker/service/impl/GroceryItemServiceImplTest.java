@@ -35,9 +35,9 @@ class GroceryItemServiceImplTest {
     private GroceryItemMapper groceryItemMapper;
     private ProductService productService;
     private PantryItemService pantryItemService;
-    private GroceryItemService groceryItemService;
     private AuthService authService;
     private UserService userService;
+    private GroceryItemService groceryItemService;
 
     @BeforeEach
     void setUp() {
@@ -122,7 +122,7 @@ class GroceryItemServiceImplTest {
         when(authService.getCurrentUserId()).thenReturn(userId);
 
         // Mock user service behavior
-        when(userService.findUserById(userId)).thenReturn(Optional.of(user));
+        when(userService.getUserById(userId)).thenReturn(Optional.of(user));
 
         // Mock repository behavior
         when(groceryItemRepository.save(mockGroceryItem)).thenReturn(mockGroceryItem);
@@ -157,7 +157,7 @@ class GroceryItemServiceImplTest {
         when(authService.getCurrentUserId()).thenReturn(userId);
 
         // Mock user service behavior
-        when(userService.findUserById(userId)).thenReturn(Optional.of(user));
+        when(userService.getUserById(userId)).thenReturn(Optional.of(user));
 
         // Mock repository behavior
         when(groceryItemRepository.save(mockGroceryItem)).thenReturn(mockGroceryItem);

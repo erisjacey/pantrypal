@@ -67,9 +67,12 @@ public class Constants {
     public static final String ERROR_MESSAGE_INVALID_GROCERY_ITEM_REQUEST = "Invalid grocery item request";
     public static final String ERROR_MESSAGE_INSUFFICIENT_QUANTITY = "Insufficient quantity to modify";
     public static final String ERROR_MESSAGE_UNKNOWN_UNIT_STRING = "Unknown unit string: ";
+    public static final String ERROR_MESSAGE_USER_NOT_FOUND = "User not found: ";
     public static final String ERROR_MESSAGE_USERNAME_NOT_FOUND = "Username not found: ";
     public static final String ERROR_MESSAGE_USERNAME_TAKEN = "Username is already taken";
     public static final String ERROR_MESSAGE_EMAIL_REGISTERED = "Email is already registered";
+    public static final String ERROR_MESSAGE_INVALID_AUTHENTICATION =
+            "No valid authentication found for the current user";
 
     // Alive messages
     public static final String GROCERY_ITEM_ALIVE_MESSAGE = "PantryPalBackend (GroceryItem) is alive!";

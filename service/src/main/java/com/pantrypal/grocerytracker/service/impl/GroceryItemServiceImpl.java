@@ -1,5 +1,6 @@
 package com.pantrypal.grocerytracker.service.impl;
 
+import com.pantrypal.grocerytracker.constants.Constants;
 import com.pantrypal.grocerytracker.dto.GroceryItemDto;
 import com.pantrypal.grocerytracker.mapper.GroceryItemMapper;
 import com.pantrypal.grocerytracker.model.GroceryItem;
@@ -73,8 +74,8 @@ public class GroceryItemServiceImpl implements GroceryItemService {
         Long userId = authService.getCurrentUserId();
 
         // Fetch the full User entity from UserService
-        User user = userService.findUserById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+        User user = userService.getUserById(userId)
+                .orElseThrow(() -> new EntityNotFoundException(Constants.ERROR_MESSAGE_USER_NOT_FOUND));
 
         // Map DTO to entity to save
         GroceryItem groceryItemToSave = groceryItemMapper.mapToEntity(groceryItem, user, product);
@@ -101,8 +102,8 @@ public class GroceryItemServiceImpl implements GroceryItemService {
         // TODO: Need to ensure updatedItem has the same user as current userId
 
         // Fetch the full User entity from UserService
-        User user = userService.findUserById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+        User user = userService.getUserById(userId)
+                .orElseThrow(() -> new EntityNotFoundException(Constants.ERROR_MESSAGE_USER_NOT_FOUND));
 
         // Map DTO to entity (including ID) to save
         GroceryItem updatedItemToSave = groceryItemMapper.mapToEntityWithId(updatedItem, user, product);

@@ -4,19 +4,48 @@ import com.pantrypal.grocerytracker.dto.PantryItemDto;
 import com.pantrypal.grocerytracker.model.GroceryItem;
 import com.pantrypal.grocerytracker.model.PantryItem;
 import com.pantrypal.grocerytracker.util.TestModels;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
 class PantryItemMapperTest {
     private PantryItemMapper mapper;
+
+    @Autowired
+    private Validator validator;
 
     @BeforeEach
     void setUp() {
         this.mapper = new PantryItemMapper();
+    }
+
+    @Test
+    @DisplayName("Test validation - null fields")
+    public void testValidation_NullFields() {
+        // Arrange: Create a DTO with null values
+        PantryItemDto dto = TestModels.getButterPantryItemDto();
+        dto.setInitialAmount(null);
+        dto.setCurrentAmount(null);
+        dto.setGroceryType(null);
+
+        // Act: Validate the DTO using Spring's validator
+        Set<ConstraintViolation<PantryItemDto>> violations = validator.validate(dto);
+
+        // Assert: Expecting ConstraintViolationException
+        assertEquals(3, violations.size(), "Expected validation violations but found none.");
     }
 
     @Test

@@ -3,6 +3,7 @@ package com.pantrypal.grocerytracker.util;
 import com.pantrypal.grocerytracker.dto.GroceryItemDto;
 import com.pantrypal.grocerytracker.dto.ModifyAmountRequest;
 import com.pantrypal.grocerytracker.dto.PantryItemDto;
+import com.pantrypal.grocerytracker.dto.auth.AuthRegisterRequest;
 import com.pantrypal.grocerytracker.model.GroceryItem;
 import com.pantrypal.grocerytracker.model.PantryItem;
 import com.pantrypal.grocerytracker.model.Product;
@@ -29,7 +30,8 @@ public class TestModels {
     // User credentials
     public static final String USER_USERNAME = "username";
     public static final String USER_EMAIL = "email@mail.com";
-    public static final String USER_PASSWORD = "pass123";
+    public static final String USER_DECODED_PASSWORD = "pass123";
+    public static final String USER_ENCODED_PASSWORD = "abcDEF123XYZ!@#$";
 
     // Amounts
     public static final double AMOUNT_0_POINT_1 = 0.1;
@@ -51,8 +53,16 @@ public class TestModels {
         user.setId(ID_1);
         user.setUsername(USER_USERNAME);
         user.setEmail(USER_EMAIL);
-        user.setPassword(USER_PASSWORD);
+        user.setPassword(USER_DECODED_PASSWORD);
         return user;
+    }
+
+    public static AuthRegisterRequest getAuthRegisterRequest() {
+        AuthRegisterRequest request = new AuthRegisterRequest();
+        request.setUsername(USER_USERNAME);
+        request.setEmail(USER_EMAIL);
+        request.setPassword(USER_DECODED_PASSWORD);
+        return request;
     }
 
     public static Product getMilkProduct() {

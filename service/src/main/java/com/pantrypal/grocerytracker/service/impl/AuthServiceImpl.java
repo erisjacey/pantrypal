@@ -5,13 +5,9 @@ import com.pantrypal.grocerytracker.dto.auth.AuthLoginRequest;
 import com.pantrypal.grocerytracker.dto.auth.AuthRegisterRequest;
 import com.pantrypal.grocerytracker.dto.auth.AuthRequest;
 import com.pantrypal.grocerytracker.dto.auth.AuthResponse;
-import com.pantrypal.grocerytracker.exception.custom.EmailAlreadyRegisteredException;
-import com.pantrypal.grocerytracker.exception.custom.UsernameAlreadyExistsException;
-import com.pantrypal.grocerytracker.mapper.UserMapper;
 import com.pantrypal.grocerytracker.model.AuthUser;
-import com.pantrypal.grocerytracker.model.User;
-import com.pantrypal.grocerytracker.repository.UserRepository;
 import com.pantrypal.grocerytracker.service.AuthService;
+import com.pantrypal.grocerytracker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,22 +27,19 @@ import java.util.stream.Collectors;
 
 @Service
 public class AuthServiceImpl implements AuthService {
-    private final UserRepository userRepository;
-    private final UserMapper userMapper;
+    private final UserService userService;
     private final JwtEncoder jwtEncoder;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public AuthServiceImpl(
-            UserRepository userRepository,
-            UserMapper userMapper,
+            UserService userService,
             JwtEncoder jwtEncoder,
             AuthenticationManager authenticationManager,
             PasswordEncoder passwordEncoder
     ) {
-        this.userRepository = userRepository;
-        this.userMapper = userMapper;
+        this.userService = userService;
         this.jwtEncoder = jwtEncoder;
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
@@ -61,23 +54,11 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthResponse registerUser(AuthRegisterRequest request) {
-        // Check if the username or email already exists
-        if (userRepository.existsByUsername(request.getUsername())) {
-            throw new UsernameAlreadyExistsException();
-        }
-
-        if (userRepository.existsByEmail(request.getEmail())) {
-            throw new EmailAlreadyRegisteredException();
-        }
-
         // Encode the password
         String encodedPassword = passwordEncoder.encode(request.getPassword());
 
-        // Map the request and encoded password to the entity to save
-        User user = userMapper.mapToEntity(request, encodedPassword);
-
-        // Save the user to the database
-        userRepository.save(user);
+        // Register user with user service
+        userService.registerUser(request, encodedPassword);
 
         // Authenticate user and generate token
         Authentication authentication = authenticateUser(request);
@@ -91,7 +72,7 @@ public class AuthServiceImpl implements AuthService {
     public Long getCurrentUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !(authentication.getPrincipal() instanceof Jwt jwt)) {
-            throw new IllegalStateException("No valid authentication found for the current user.");
+            throw new IllegalStateException(Constants.ERROR_MESSAGE_INVALID_AUTHENTICATION);
         }
 
         return jwt.getClaim(Constants.JWT_KEY_USER_ID);

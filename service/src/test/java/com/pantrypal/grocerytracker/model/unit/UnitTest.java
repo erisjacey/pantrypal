@@ -20,12 +20,7 @@ class UnitTest {
     @DisplayName("Test get unit string with invalid unit")
     void fromStringWithInvalidUnit() {
         String invalidUnit = "invalid_unit";
-        Throwable exception = assertThrows(
-                IllegalArgumentException.class, () -> Unit.fromString(invalidUnit)
-        );
-        assertEquals(
-                Constants.ERROR_MESSAGE_UNKNOWN_UNIT_STRING + invalidUnit,
-                exception.getMessage()
-        );
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> Unit.fromString(invalidUnit));
+        assertEquals(Constants.ERROR_MESSAGE_UNKNOWN_UNIT_STRING + invalidUnit, exception.getMessage());
     }
 }
