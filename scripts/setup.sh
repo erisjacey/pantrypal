@@ -3,6 +3,13 @@ set -e
 
 echo "Setting up PantryPal locally..."
 
+if ! command -v deno &> /dev/null; then
+    echo "Deno not found. Installing..."
+    curl -fsSL https://deno.land/install.sh | sh
+    export DENO_INSTALL="$HOME/.deno"
+    export PATH="$DENO_INSTALL/bin:$PATH"
+fi
+
 if ! command -v supabase &> /dev/null; then
     echo "Supabase CLI not found. Installing..."
     if command -v brew &> /dev/null; then
