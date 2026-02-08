@@ -21,6 +21,7 @@ Smart pantry inventory management for households.
 
 - Node.js 18+
 - Docker Desktop
+- [Deno](https://deno.land/) (for Edge Functions development and testing, installed automatically by `setup.sh)
 - [Supabase CLI](https://supabase.com/docs/guides/local-development/cli/getting-started) (installed automatically by `setup.sh`)
 
 ### Quick Start

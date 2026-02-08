@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "lib": ["deno.window"]
+  },
+  "imports": {
+    "@std/assert": "jsr:@std/assert"
+  }
+}
