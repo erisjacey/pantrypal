@@ -2,6 +2,7 @@
 -- description: creates granular row level security policies for all tables.
 --   policies are separated per operation (select, insert, update, delete)
 --   and per role (anon, authenticated) as per supabase best practices.
+--   auth.uid() is wrapped in (select ...) for query planner optimization.
 -- affected tables: households, household_members, pantries, categories, items
 
 -- ============================================
@@ -15,7 +16,7 @@ create policy "authenticated users can view their households"
   using (
     id in (
       select household_id from public.household_members
-      where user_id = auth.uid()
+      where user_id = (select auth.uid())
     )
   );
 
@@ -23,7 +24,7 @@ create policy "authenticated users can view their households"
 create policy "authenticated users can create households"
   on public.households for insert
   to authenticated
-  with check (auth.uid() = created_by);
+  with check ((select auth.uid()) = created_by);
 
 -- only household owners can update their households
 create policy "authenticated owners can update households"
@@ -32,7 +33,13 @@ create policy "authenticated owners can update households"
   using (
     id in (
       select household_id from public.household_members
-      where user_id = auth.uid() and role = 'owner'
+      where user_id = (select auth.uid()) and role = 'owner'
+    )
+  )
+  with check (
+    id in (
+      select household_id from public.household_members
+      where user_id = (select auth.uid()) and role = 'owner'
     )
   );
 
@@ -43,7 +50,7 @@ create policy "authenticated owners can delete households"
   using (
     id in (
       select household_id from public.household_members
-      where user_id = auth.uid() and role = 'owner'
+      where user_id = (select auth.uid()) and role = 'owner'
     )
   );
 
@@ -58,7 +65,7 @@ create policy "authenticated users can view household members"
   using (
     household_id in (
       select household_id from public.household_members
-      where user_id = auth.uid()
+      where user_id = (select auth.uid())
     )
   );
 
@@ -69,7 +76,7 @@ create policy "authenticated owners can add members"
   with check (
     household_id in (
       select household_id from public.household_members
-      where user_id = auth.uid() and role = 'owner'
+      where user_id = (select auth.uid()) and role = 'owner'
     )
   );
 
@@ -80,7 +87,13 @@ create policy "authenticated owners can update member roles"
   using (
     household_id in (
       select household_id from public.household_members
-      where user_id = auth.uid() and role = 'owner'
+      where user_id = (select auth.uid()) and role = 'owner'
+    )
+  )
+  with check (
+    household_id in (
+      select household_id from public.household_members
+      where user_id = (select auth.uid()) and role = 'owner'
     )
   );
 
@@ -91,7 +104,7 @@ create policy "authenticated owners can remove members"
   using (
     household_id in (
       select household_id from public.household_members
-      where user_id = auth.uid() and role = 'owner'
+      where user_id = (select auth.uid()) and role = 'owner'
     )
   );
 
@@ -106,7 +119,7 @@ create policy "authenticated members can view pantries"
   using (
     household_id in (
       select household_id from public.household_members
-      where user_id = auth.uid()
+      where user_id = (select auth.uid())
     )
   );
 
@@ -117,7 +130,7 @@ create policy "authenticated members can create pantries"
   with check (
     household_id in (
       select household_id from public.household_members
-      where user_id = auth.uid()
+      where user_id = (select auth.uid())
     )
   );
 
@@ -128,7 +141,13 @@ create policy "authenticated members can update pantries"
   using (
     household_id in (
       select household_id from public.household_members
-      where user_id = auth.uid()
+      where user_id = (select auth.uid())
+    )
+  )
+  with check (
+    household_id in (
+      select household_id from public.household_members
+      where user_id = (select auth.uid())
     )
   );
 
@@ -139,7 +158,7 @@ create policy "authenticated members can delete pantries"
   using (
     household_id in (
       select household_id from public.household_members
-      where user_id = auth.uid()
+      where user_id = (select auth.uid())
     )
   );
 
@@ -164,7 +183,7 @@ create policy "authenticated users can view categories"
 create policy "authenticated users can create categories"
   on public.categories for insert
   to authenticated
-  with check (auth.uid() is not null);
+  with check ((select auth.uid()) is not null);
 
 -- ============================================
 -- items policies
@@ -178,7 +197,7 @@ create policy "authenticated members can view items"
     pantry_id in (
       select p.id from public.pantries p
       join public.household_members hm on p.household_id = hm.household_id
-      where hm.user_id = auth.uid()
+      where hm.user_id = (select auth.uid())
     )
   );
 
@@ -190,7 +209,7 @@ create policy "authenticated members can add items"
     pantry_id in (
       select p.id from public.pantries p
       join public.household_members hm on p.household_id = hm.household_id
-      where hm.user_id = auth.uid()
+      where hm.user_id = (select auth.uid())
     )
   );
 
@@ -202,7 +221,14 @@ create policy "authenticated members can update items"
     pantry_id in (
       select p.id from public.pantries p
       join public.household_members hm on p.household_id = hm.household_id
-      where hm.user_id = auth.uid()
+      where hm.user_id = (select auth.uid())
+    )
+  )
+  with check (
+    pantry_id in (
+      select p.id from public.pantries p
+      join public.household_members hm on p.household_id = hm.household_id
+      where hm.user_id = (select auth.uid())
     )
   );
 
@@ -214,6 +240,6 @@ create policy "authenticated members can delete items"
     pantry_id in (
       select p.id from public.pantries p
       join public.household_members hm on p.household_id = hm.household_id
-      where hm.user_id = auth.uid()
+      where hm.user_id = (select auth.uid())
     )
   );

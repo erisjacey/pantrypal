@@ -9,12 +9,16 @@
 -- ============================================
 
 create or replace function public.update_updated_at_column()
-returns trigger as $$
+returns trigger
+language plpgsql
+security invoker
+set search_path = ''
+as $$
 begin
-  new.updated_at = now();
+  new.updated_at := now();
   return new;
 end;
-$$ language plpgsql;
+$$;
 
 -- apply the updated_at trigger to all tables that have that column
 create trigger update_households_updated_at
@@ -49,7 +53,12 @@ returns table (
   oldest_expiry date,
   avg_unit_price decimal,
   total_value decimal
-) as $$
+)
+language plpgsql
+stable
+security invoker
+set search_path = ''
+as $$
 begin
   return query
   select
@@ -66,7 +75,7 @@ begin
     and i.is_consumed = false
   group by i.name, i.unit;
 end;
-$$ language plpgsql;
+$$;
 
 -- get all active items in a pantry grouped by product
 -- note: groups by unit, so items with mixed units appear as separate rows.
@@ -81,7 +90,12 @@ returns table (
   oldest_expiry date,
   total_value decimal,
   category_name text
-) as $$
+)
+language plpgsql
+stable
+security invoker
+set search_path = ''
+as $$
 begin
   return query
   select
@@ -100,4 +114,4 @@ begin
   group by i.name, i.barcode, i.unit, c.name
   order by min(i.expiry_date) asc nulls last;
 end;
-$$ language plpgsql;
+$$;
