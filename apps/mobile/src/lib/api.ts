@@ -90,32 +90,33 @@ export const householdsApi = {
   },
 
   create: async (name: string) => {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser()
-    if (!user) {
-      throw new Error('Not authenticated')
-    }
-
-    const { data: household, error: createError } = await supabase
-      .from('households')
-      .insert({ name, created_by: user.id })
-      .select()
-      .single()
-    if (createError) {
-      throw createError
-    }
-
-    const { error: memberError } = await supabase.from('household_members').insert({
-      household_id: household.id,
-      user_id: user.id,
-      role: 'owner' as const,
+    const { data, error } = await supabase.rpc('create_household_with_owner', {
+      p_name: name,
     })
-    if (memberError) {
-      throw memberError
+    if (error) {
+      throw error
     }
+    return data
+  },
 
-    return household
+  joinWithCode: async (inviteCode: string) => {
+    const { data, error } = await supabase.rpc('join_household_with_code', {
+      p_invite_code: inviteCode,
+    })
+    if (error) {
+      throw error
+    }
+    return data
+  },
+
+  regenerateInviteCode: async (householdId: string) => {
+    const { data, error } = await supabase.rpc('regenerate_invite_code', {
+      p_household_id: householdId,
+    })
+    if (error) {
+      throw error
+    }
+    return data as string
   },
 
   getById: async (id: string) => {
@@ -128,6 +129,26 @@ export const householdsApi = {
       throw error
     }
     return data
+  },
+
+  update: async (id: string, params: { name: string }) => {
+    const { data, error } = await supabase
+      .from('households')
+      .update({ name: params.name })
+      .eq('id', id)
+      .select()
+      .single()
+    if (error) {
+      throw error
+    }
+    return data
+  },
+
+  delete: async (id: string) => {
+    const { error } = await supabase.from('households').delete().eq('id', id)
+    if (error) {
+      throw error
+    }
   },
 }
 
@@ -158,6 +179,26 @@ export const pantriesApi = {
       throw error
     }
     return data
+  },
+
+  update: async (id: string, params: { name?: string; location?: string | null }) => {
+    const { data, error } = await supabase
+      .from('pantries')
+      .update(params)
+      .eq('id', id)
+      .select()
+      .single()
+    if (error) {
+      throw error
+    }
+    return data
+  },
+
+  delete: async (id: string) => {
+    const { error } = await supabase.from('pantries').delete().eq('id', id)
+    if (error) {
+      throw error
+    }
   },
 }
 

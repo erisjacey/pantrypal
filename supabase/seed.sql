@@ -97,8 +97,8 @@ insert into auth.identities (
 -- household
 -- ============================================================================
 
-insert into public.households (id, name, created_by) values
-  ('c2eebc99-9c0b-4ef8-bb6d-6bb9bd380a33', 'Test Family', 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11');
+insert into public.households (id, name, created_by, invite_code) values
+  ('c2eebc99-9c0b-4ef8-bb6d-6bb9bd380a33', 'Test Family', 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'TEST01');
 
 -- ============================================================================
 -- household members

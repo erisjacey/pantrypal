@@ -37,6 +37,7 @@ export interface Database {
         Row: {
           id: string
           name: string
+          invite_code: string | null
           created_by: string | null
           created_at: string
           updated_at: string
@@ -44,12 +45,14 @@ export interface Database {
         Insert: {
           id?: string
           name: string
+          invite_code?: string | null
           created_by?: string
           created_at?: string
           updated_at?: string
         }
         Update: {
           name?: string
+          invite_code?: string | null
           updated_at?: string
         }
         Relationships: [
@@ -242,7 +245,18 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      create_household_with_owner: {
+        Args: { p_name: string }
+        Returns: Tables['households']['Row']
+      }
+      join_household_with_code: {
+        Args: { p_invite_code: string }
+        Returns: Tables['households']['Row']
+      }
+      regenerate_invite_code: {
+        Args: { p_household_id: string }
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never
@@ -257,6 +271,7 @@ export interface Database {
 export type Tables = Database['public']['Tables']
 export type Household = Tables['households']['Row']
 export type HouseholdInsert = Tables['households']['Insert']
+export type HouseholdUpdate = Tables['households']['Update']
 export type HouseholdMember = Tables['household_members']['Row']
 export type Pantry = Tables['pantries']['Row']
 export type PantryInsert = Tables['pantries']['Insert']
