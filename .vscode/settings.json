@@ -1,8 +1,8 @@
 {
-  "deno.enable": true,
+  "deno.enable": false,
   "deno.enablePaths": ["supabase/functions"],
   "deno.config": "supabase/functions/deno.json",
-  "deno.path": "${userHome}/.deno/bin/deno",
+  "deno.lint": true,
 
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
@@ -19,5 +19,8 @@
   "eslint.validate": ["typescript", "typescriptreact"],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
-  }
+  },
+
+  "typescript.tsdk": "apps/mobile/node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }

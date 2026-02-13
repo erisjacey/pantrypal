@@ -30,14 +30,14 @@ export enum CountUnit {
   PACKAGE = 'package',
 }
 
-export type Unit = VolumeUnit | WeightUnit | CountUnit;
+export type Unit = VolumeUnit | WeightUnit | CountUnit
 
 export const getUnitType = (unit: Unit): UnitType => {
   if (Object.values(VolumeUnit).includes(unit as VolumeUnit)) {
-    return UnitType.VOLUME;
+    return UnitType.VOLUME
   }
   if (Object.values(WeightUnit).includes(unit as WeightUnit)) {
-    return UnitType.WEIGHT;
+    return UnitType.WEIGHT
   }
-  return UnitType.COUNT;
-};
+  return UnitType.COUNT
+}

@@ -25,6 +25,77 @@ Scopes: db, edge, mobile, docs, scripts, config
 3. Reference the issue in your PR description: `Closes #123`
 4. Squash merge when approved
 
+## Code Quality & Tooling
+
+PantryPal uses **two toolchains** (one for mobile, one for edge functions) but enforces the **same visual style** across the entire codebase.
+
+### Shared Style (Enforced Everywhere)
+
+- No semicolons
+- Single quotes
+- 2-space indentation
+- 100 character line width
+
+### Mobile App (`apps/mobile/`)
+
+**Formatter:** Prettier (configured via `.prettierrc` at root)
+**Linter:** ESLint (configured via `apps/mobile/eslint.config.js`)
+**Type Checker:** TypeScript (`tsc`)
+
+```bash
+cd apps/mobile
+npm run format      # Format with Prettier
+npm run lint        # Lint with ESLint
+npm run typecheck   # Type check with tsc
+```
+
+### Edge Functions (`supabase/functions/`)
+
+**Formatter:** Deno fmt (configured via `supabase/functions/deno.json`)
+**Linter:** Deno lint (configured via `supabase/functions/deno.json`)
+**Type Checker:** Deno check
+
+```bash
+deno fmt supabase/functions/           # Format
+deno lint supabase/functions/          # Lint
+deno check supabase/functions/**/*.ts  # Type check
+```
+
+### Why Two Toolchains?
+
+- **Mobile app** uses React Native → Node.js ecosystem → ESLint + Prettier
+- **Edge Functions** use Deno runtime → Deno's built-in tooling → `deno fmt` + `deno lint`
+- Deno doesn't support Prettier/ESLint (different module system: `npm:`, `jsr:`)
+- ESLint can't parse Deno-specific imports
+
+### VSCode Setup
+
+The `.vscode/settings.json` configures both toolchains:
+
+- Prettier formats `.ts`/`.tsx` files in `apps/mobile/`
+- Deno extension handles `.ts` files in `supabase/functions/`
+- Make sure you have both extensions installed:
+  - **Prettier** (`esbenp.prettier-vscode`)
+  - **Deno** (`denoland.vscode-deno`)
+
+### Before Committing
+
+Run all checks for the area you modified:
+
+**Mobile changes:**
+```bash
+cd apps/mobile
+npm run format && npm run lint && npm run typecheck
+```
+
+**Edge Function changes:**
+```bash
+deno fmt supabase/functions/
+deno lint supabase/functions/
+deno check supabase/functions/**/*.ts
+deno test supabase/functions/
+```
+
 ## Architecture
 
 ```
