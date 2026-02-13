@@ -1,7 +1,7 @@
 import { View, StyleSheet } from 'react-native'
 import { ActivityIndicator, useTheme } from 'react-native-paper'
 
-export const LoadingScreen = () => {
+const LoadingScreen = () => {
   const theme = useTheme()
 
   return (
@@ -18,3 +18,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 })
+
+export default LoadingScreen
