@@ -1,5 +1,5 @@
-import { MD3LightTheme, MD3DarkTheme, type MD3Theme } from 'react-native-paper';
-import { useColorScheme } from 'react-native';
+import { MD3LightTheme, MD3DarkTheme, type MD3Theme } from 'react-native-paper'
+import { useColorScheme } from 'react-native'
 
 const brandColors = {
   primary: '#2E7D32',
@@ -10,7 +10,7 @@ const brandColors = {
   tertiaryContainer: '#BBDEFB',
   error: '#C62828',
   errorContainer: '#FFCDD2',
-};
+}
 
 export const lightTheme: MD3Theme = {
   ...MD3LightTheme,
@@ -26,7 +26,7 @@ export const lightTheme: MD3Theme = {
     onSurface: '#212121',
     onSurfaceVariant: '#757575',
   },
-};
+}
 
 export const darkTheme: MD3Theme = {
   ...MD3DarkTheme,
@@ -49,11 +49,11 @@ export const darkTheme: MD3Theme = {
     onSurface: '#E0E0E0',
     onSurfaceVariant: '#BDBDBD',
   },
-};
+}
 
 export const useAppTheme = (): MD3Theme => {
-  const colorScheme = useColorScheme();
-  return colorScheme === 'dark' ? darkTheme : lightTheme;
-};
+  const colorScheme = useColorScheme()
+  return colorScheme === 'dark' ? darkTheme : lightTheme
+}
 
-export const theme = lightTheme;
+export const theme = lightTheme

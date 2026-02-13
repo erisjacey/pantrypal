@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.expo/
+web-build/
+*.apk
+*.ipa
+*.aab
+package-lock.json
+supabase/.temp/
+supabase/.branches/

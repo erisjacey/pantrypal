@@ -1,9 +1,9 @@
-import { Tabs } from 'expo-router';
-import { useTheme } from 'react-native-paper';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { Tabs } from 'expo-router'
+import { useTheme } from 'react-native-paper'
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 
 const TabLayout = () => {
-  const theme = useTheme();
+  const theme = useTheme()
 
   return (
     <Tabs
@@ -41,7 +41,7 @@ const TabLayout = () => {
         }}
       />
     </Tabs>
-  );
-};
+  )
+}
 
-export default TabLayout;
+export default TabLayout

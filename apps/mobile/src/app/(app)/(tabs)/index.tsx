@@ -1,9 +1,9 @@
-import { View, StyleSheet } from 'react-native';
-import { Text } from 'react-native-paper';
-import { useAuth } from '@/contexts/AuthContext';
+import { View, StyleSheet } from 'react-native'
+import { Text } from 'react-native-paper'
+import { useAuth } from '@/contexts/AuthContext'
 
 const HomeScreen = () => {
-  const { user } = useAuth();
+  const { user } = useAuth()
 
   return (
     <View style={styles.container}>
@@ -13,8 +13,8 @@ const HomeScreen = () => {
       </Text>
       <Text variant="bodySmall">Dashboard content will go here</Text>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -27,6 +27,6 @@ const styles = StyleSheet.create({
     marginTop: 8,
     marginBottom: 16,
   },
-});
+})
 
-export default HomeScreen;
+export default HomeScreen

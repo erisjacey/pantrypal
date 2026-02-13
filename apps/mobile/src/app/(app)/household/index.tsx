@@ -1,5 +1,5 @@
-import { View, StyleSheet } from 'react-native';
-import { Text } from 'react-native-paper';
+import { View, StyleSheet } from 'react-native'
+import { Text } from 'react-native-paper'
 
 const HouseholdScreen = () => {
   return (
@@ -9,8 +9,8 @@ const HouseholdScreen = () => {
         Household management will go here
       </Text>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -22,6 +22,6 @@ const styles = StyleSheet.create({
   subtitle: {
     marginTop: 8,
   },
-});
+})
 
-export default HouseholdScreen;
+export default HouseholdScreen

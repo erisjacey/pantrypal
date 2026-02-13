@@ -1,13 +1,13 @@
-import { View, StyleSheet } from 'react-native';
-import { Text, Button } from 'react-native-paper';
-import { Link, Redirect } from 'expo-router';
-import { useAuth } from '@/contexts/AuthContext';
+import { View, StyleSheet } from 'react-native'
+import { Text, Button } from 'react-native-paper'
+import { Link, Redirect } from 'expo-router'
+import { useAuth } from '@/contexts/AuthContext'
 
 const SignUpScreen = () => {
-  const { session } = useAuth();
+  const { session } = useAuth()
 
   if (session) {
-    return <Redirect href="/(app)/(tabs)" />;
+    return <Redirect href="/(app)/(tabs)" />
   }
 
   return (
@@ -20,8 +20,8 @@ const SignUpScreen = () => {
         <Button mode="text">Already have an account? Sign in</Button>
       </Link>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -34,6 +34,6 @@ const styles = StyleSheet.create({
     marginTop: 8,
     marginBottom: 24,
   },
-});
+})
 
-export default SignUpScreen;
+export default SignUpScreen

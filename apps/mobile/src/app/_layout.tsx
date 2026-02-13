@@ -1,27 +1,27 @@
-import { useEffect } from 'react';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import * as SplashScreen from 'expo-splash-screen';
-import { QueryClientProvider } from '@tanstack/react-query';
-import { PaperProvider } from 'react-native-paper';
-import { AuthProvider, useAuth } from '@/contexts/AuthContext';
-import { queryClient } from '@/lib/queryClient';
-import { useAppStateRefetch } from '@/hooks/useAppState';
-import { useAppTheme } from '@/constants/theme';
+import { useEffect } from 'react'
+import { Stack } from 'expo-router'
+import { StatusBar } from 'expo-status-bar'
+import * as SplashScreen from 'expo-splash-screen'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { PaperProvider } from 'react-native-paper'
+import { AuthProvider, useAuth } from '@/contexts/AuthContext'
+import { queryClient } from '@/lib/queryClient'
+import { useAppStateRefetch } from '@/hooks/useAppState'
+import { useAppTheme } from '@/constants/theme'
 
-SplashScreen.preventAutoHideAsync();
+SplashScreen.preventAutoHideAsync()
 
 const RootNavigator = () => {
-  const { isLoading } = useAuth();
+  const { isLoading } = useAuth()
 
   useEffect(() => {
     if (!isLoading) {
-      SplashScreen.hideAsync();
+      SplashScreen.hideAsync()
     }
-  }, [isLoading]);
+  }, [isLoading])
 
   if (isLoading) {
-    return null;
+    return null
   }
 
   return (
@@ -34,12 +34,12 @@ const RootNavigator = () => {
       </Stack>
       <StatusBar style="auto" />
     </>
-  );
-};
+  )
+}
 
 const RootLayout = () => {
-  const theme = useAppTheme();
-  useAppStateRefetch();
+  const theme = useAppTheme()
+  useAppStateRefetch()
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -49,7 +49,7 @@ const RootLayout = () => {
         </AuthProvider>
       </PaperProvider>
     </QueryClientProvider>
-  );
-};
+  )
+}
 
-export default RootLayout;
+export default RootLayout
