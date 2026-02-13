@@ -55,7 +55,7 @@ Deno.serve(async (req) => {
     // Execute domain logic
     aggregate.consume(Quantity.create(amount, unit))
 
-    // Persist
+    // Persist remaining batches (partially consumed)
     for (const batch of aggregate.getBatches()) {
       const qty = batch.getCurrentQuantity()
       await supabase
@@ -63,8 +63,18 @@ Deno.serve(async (req) => {
         .update({
           current_quantity: qty.amount,
           unit: qty.unit,
-          is_consumed: batch.isFullyConsumed(),
-          consumed_at: batch.isFullyConsumed() ? new Date().toISOString() : null,
+        })
+        .eq('id', batch.id)
+    }
+
+    // Persist fully consumed batches
+    for (const batch of aggregate.getConsumedBatches()) {
+      await supabase
+        .from('items')
+        .update({
+          current_quantity: 0,
+          is_consumed: true,
+          consumed_at: new Date().toISOString(),
         })
         .eq('id', batch.id)
     }

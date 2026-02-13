@@ -3,6 +3,8 @@ import { InsufficientQuantityError, Item } from './Item.ts'
 import type { Unit } from './Unit.ts'
 
 export class ItemAggregate {
+  private consumedBatches: Item[] = []
+
   constructor(
     public readonly barcode: string,
     public readonly name: string,
@@ -60,11 +62,17 @@ export class ItemAggregate {
         remaining = remaining.subtract(consumed)
       }
     }
+    const fullyConsumed = this.batches.filter((b) => b.isFullyConsumed())
+    this.consumedBatches.push(...fullyConsumed)
     this.batches = this.batches.filter((b) => !b.isFullyConsumed())
   }
 
   getBatches = (): Item[] => {
     return [...this.batches]
+  }
+
+  getConsumedBatches = (): Item[] => {
+    return [...this.consumedBatches]
   }
 
   getBatchCount = (): number => {
