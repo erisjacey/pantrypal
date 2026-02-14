@@ -2,6 +2,7 @@ import { Redirect, Stack } from 'expo-router'
 import { useAuth } from '@/contexts/AuthContext'
 import { HouseholdProvider, useHousehold } from '@/contexts/HouseholdContext'
 import LoadingScreen from '@/components/ui/LoadingScreen'
+import OnboardingScreen from './onboarding'
 
 const AppNavigator = () => {
   const { isLoading, hasHousehold } = useHousehold()
@@ -11,7 +12,7 @@ const AppNavigator = () => {
   }
 
   if (!hasHousehold) {
-    return <Redirect href="/(app)/onboarding" />
+    return <OnboardingScreen />
   }
 
   return (
@@ -20,7 +21,6 @@ const AppNavigator = () => {
       <Stack.Screen name="pantry/[id]" options={{ headerShown: true, title: 'Pantry' }} />
       <Stack.Screen name="item/[id]" options={{ headerShown: true, title: 'Item' }} />
       <Stack.Screen name="household/index" options={{ headerShown: true, title: 'Household' }} />
-      <Stack.Screen name="onboarding" options={{ headerShown: false }} />
     </Stack>
   )
 }
