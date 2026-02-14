@@ -10,6 +10,7 @@ import FormField from '@/components/ui/FormField'
 
 const signUpSchema = z
   .object({
+    displayName: z.string().min(1, 'Display name is required').max(50, 'Max 50 characters'),
     email: z.email('Invalid email address'),
     password: z.string().min(6, 'Password must be at least 6 characters'),
     confirmPassword: z.string().min(1, 'Please confirm your password'),
@@ -32,7 +33,7 @@ const SignUpScreen = () => {
     formState: { errors },
   } = useForm<SignUpFormData>({
     resolver: zodResolver(signUpSchema),
-    defaultValues: { email: '', password: '', confirmPassword: '' },
+    defaultValues: { displayName: '', email: '', password: '', confirmPassword: '' },
   })
 
   if (session) {
@@ -43,7 +44,7 @@ const SignUpScreen = () => {
     setError(null)
     setLoading(true)
     try {
-      await signUp(data.email, data.password)
+      await signUp(data.email, data.password, data.displayName)
       // Supabase local auto-confirms, so sign in immediately
       await signIn(data.email, data.password)
     } catch (e) {
@@ -76,6 +77,16 @@ const SignUpScreen = () => {
           </Banner>
 
           <View style={styles.form}>
+            <FormField
+              control={control}
+              name="displayName"
+              label="Display Name"
+              error={errors.displayName?.message}
+              autoCapitalize="words"
+              autoComplete="name"
+              textContentType="name"
+            />
+
             <FormField
               control={control}
               name="email"

@@ -16,8 +16,8 @@ export const useCreateHousehold = () => {
   const { showSnackbar } = useSnackbar()
   return useMutation({
     mutationFn: householdsApi.create,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: HOUSEHOLDS_QUERY_KEY })
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: HOUSEHOLDS_QUERY_KEY })
       showSnackbar('Household created')
     },
     onError: (error) => {
@@ -31,8 +31,8 @@ export const useJoinHousehold = () => {
   const { showSnackbar } = useSnackbar()
   return useMutation({
     mutationFn: householdsApi.joinWithCode,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: HOUSEHOLDS_QUERY_KEY })
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: HOUSEHOLDS_QUERY_KEY })
       showSnackbar('Joined household')
     },
     onError: (error) => {

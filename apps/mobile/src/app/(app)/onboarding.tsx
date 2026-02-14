@@ -71,48 +71,46 @@ const OnboardingScreen = () => {
             style={styles.tabs}
           />
 
-          {tab === 'create' ? (
-            <View style={styles.form}>
-              <FormField
-                control={createForm.control}
-                name="name"
-                label="Household Name"
-                error={createForm.formState.errors.name?.message}
-                placeholder="e.g. Smith Family"
-                autoCapitalize="words"
-              />
-              <Button
-                mode="contained"
-                onPress={createForm.handleSubmit(onCreateSubmit)}
-                loading={createMutation.isPending}
-                disabled={createMutation.isPending}
-                style={styles.submitButton}
-              >
-                Create Household
-              </Button>
-            </View>
-          ) : (
-            <View style={styles.form}>
-              <FormField
-                control={joinForm.control}
-                name="inviteCode"
-                label="Invite Code"
-                error={joinForm.formState.errors.inviteCode?.message}
-                placeholder="e.g. ABC123"
-                autoCapitalize="characters"
-                maxLength={6}
-              />
-              <Button
-                mode="contained"
-                onPress={joinForm.handleSubmit(onJoinSubmit)}
-                loading={joinMutation.isPending}
-                disabled={joinMutation.isPending}
-                style={styles.submitButton}
-              >
-                Join Household
-              </Button>
-            </View>
-          )}
+          <View style={[styles.form, tab !== 'create' && styles.hidden]}>
+            <FormField
+              control={createForm.control}
+              name="name"
+              label="Household Name"
+              error={createForm.formState.errors.name?.message}
+              placeholder="e.g. Smith Family"
+              autoCapitalize="words"
+            />
+            <Button
+              mode="contained"
+              onPress={createForm.handleSubmit(onCreateSubmit)}
+              loading={createMutation.isPending}
+              disabled={createMutation.isPending}
+              style={styles.submitButton}
+            >
+              Create Household
+            </Button>
+          </View>
+
+          <View style={[styles.form, tab !== 'join' && styles.hidden]}>
+            <FormField
+              control={joinForm.control}
+              name="inviteCode"
+              label="Invite Code"
+              error={joinForm.formState.errors.inviteCode?.message}
+              placeholder="e.g. ABC123"
+              autoCapitalize="characters"
+              maxLength={6}
+            />
+            <Button
+              mode="contained"
+              onPress={joinForm.handleSubmit(onJoinSubmit)}
+              loading={joinMutation.isPending}
+              disabled={joinMutation.isPending}
+              style={styles.submitButton}
+            >
+              Join Household
+            </Button>
+          </View>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -145,6 +143,9 @@ const styles = StyleSheet.create({
   },
   form: {
     marginBottom: 16,
+  },
+  hidden: {
+    display: 'none',
   },
   submitButton: {
     marginTop: 8,

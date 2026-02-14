@@ -7,7 +7,7 @@ interface AuthContextValue {
   user: User | null
   isLoading: boolean
   signIn: (email: string, password: string) => Promise<void>
-  signUp: (email: string, password: string) => Promise<void>
+  signUp: (email: string, password: string, displayName?: string) => Promise<void>
   signOut: () => Promise<void>
 }
 
@@ -50,8 +50,12 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     }
   }
 
-  const signUp = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signUp({ email, password })
+  const signUp = async (email: string, password: string, displayName?: string) => {
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: displayName ? { data: { display_name: displayName } } : undefined,
+    })
     if (error) {
       throw error
     }

@@ -153,6 +153,33 @@ export interface Database {
         }
         Relationships: []
       }
+      profiles: {
+        Row: {
+          id: string
+          display_name: string
+          avatar_url: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id: string
+          display_name: string
+          avatar_url?: string | null
+        }
+        Update: {
+          display_name?: string
+          avatar_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'profiles_id_fkey'
+            columns: ['id']
+            isOneToOne: true
+            referencedRelation: 'users'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       items: {
         Row: {
           id: string
@@ -276,5 +303,6 @@ export type HouseholdMember = Tables['household_members']['Row']
 export type Pantry = Tables['pantries']['Row']
 export type PantryInsert = Tables['pantries']['Insert']
 export type Category = Tables['categories']['Row']
+export type Profile = Tables['profiles']['Row']
 export type Item = Tables['items']['Row']
 export type ItemInsert = Tables['items']['Insert']

@@ -94,6 +94,16 @@ insert into auth.identities (
 );
 
 -- ============================================================================
+-- profiles (trigger auto-creates from auth.users insert above, but with
+-- email prefix as display_name; update to friendly names)
+-- ============================================================================
+
+update public.profiles set display_name = 'Test Owner'
+  where id = 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11';
+update public.profiles set display_name = 'Test Member'
+  where id = 'b1ffbc99-9c0b-4ef8-bb6d-6bb9bd380a22';
+
+-- ============================================================================
 -- household
 -- ============================================================================
 
