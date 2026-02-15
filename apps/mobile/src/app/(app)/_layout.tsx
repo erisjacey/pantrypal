@@ -27,7 +27,8 @@ const AppNavigator = () => {
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="(tabs)" />
-      <Stack.Screen name="pantry/[id]" options={{ ...screenOptions, title: 'Pantry' }} />
+      <Stack.Screen name="pantry/create" options={{ ...screenOptions, title: 'Create Pantry' }} />
+      <Stack.Screen name="pantry/[id]" options={{ headerShown: false }} />
       <Stack.Screen name="item/[id]" options={{ ...screenOptions, title: 'Item' }} />
       <Stack.Screen name="household/index" options={{ ...screenOptions, title: 'Household' }} />
     </Stack>
