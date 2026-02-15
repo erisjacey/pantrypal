@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Stack } from 'expo-router'
+import { en, registerTranslation } from 'react-native-paper-dates'
 import { StatusBar } from 'expo-status-bar'
 import * as SplashScreen from 'expo-splash-screen'
 import { QueryClientProvider } from '@tanstack/react-query'
@@ -9,6 +10,8 @@ import { SnackbarProvider } from '@/contexts/SnackbarContext'
 import { queryClient } from '@/lib/queryClient'
 import { useAppStateRefetch } from '@/hooks/useAppState'
 import { useAppTheme } from '@/constants/theme'
+
+registerTranslation('en', en)
 
 SplashScreen.preventAutoHideAsync()
 
