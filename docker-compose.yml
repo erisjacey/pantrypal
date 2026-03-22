@@ -1,0 +1,32 @@
+services:
+  db:
+    container_name: db
+    image: postgres:18
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    healthcheck:
+      test: pg_isready -U ${POSTGRES_USER}
+    volumes:
+      - pgdata:/var/lib/postgresql
+
+  backend:
+    container_name: backend
+    build: backend/
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+      APP_USER_1_NAME: ${APP_USER_1_NAME}
+      APP_USER_1_PASSWORD: ${APP_USER_1_PASSWORD}
+      APP_USER_2_NAME: ${APP_USER_2_NAME}
+      APP_USER_2_PASSWORD: ${APP_USER_2_PASSWORD}
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:
