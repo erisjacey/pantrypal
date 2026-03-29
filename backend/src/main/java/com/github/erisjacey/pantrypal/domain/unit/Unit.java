@@ -1,5 +1,6 @@
 package com.github.erisjacey.pantrypal.domain.unit;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
@@ -37,6 +38,14 @@ public sealed interface Unit permits VolumeUnit, WeightUnit, CountUnit {
    * @return The unit code.
    */
   String getCode();
+
+  /**
+   * Returns the multiplication factor to convert one of this unit to the base unit of its type
+   * (e.g. ml for volume, g for weight, piece for count).
+   *
+   * @return The base factor.
+   */
+  BigDecimal getToBaseFactor();
 
   /**
    * Gets the corresponding type of unit.
